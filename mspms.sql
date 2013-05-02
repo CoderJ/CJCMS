@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50528
+Source Server Version : 50529
 Source Host           : localhost:3306
 Source Database       : mspms
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2013-05-02 10:55:20
+Date: 2013-05-02 17:42:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,12 +31,11 @@ CREATE TABLE `cj_article` (
   `a_updateTime` datetime DEFAULT NULL,
   `a_creatTime` datetime DEFAULT NULL,
   PRIMARY KEY (`a_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cj_article
 -- ----------------------------
-INSERT INTO `cj_article` VALUES ('1', '这是第一篇测试的文章', '1', '这是文章来源', '这里是文章的正文', '2013-05-02', 'published', '1', null, '2013-05-02 00:32:51');
 
 -- ----------------------------
 -- Table structure for `cj_category`
@@ -59,6 +58,41 @@ INSERT INTO `cj_category` VALUES ('1', '专业介绍', 'page', '0', '1', '1');
 INSERT INTO `cj_category` VALUES ('2', '专业简介', 'page', '1', '1', '1');
 INSERT INTO `cj_category` VALUES ('4', '组织架构', 'page', '1', '1', '2');
 INSERT INTO `cj_category` VALUES ('6', '什么什么实验室', 'article', '4', '1', '0');
+
+-- ----------------------------
+-- Table structure for `cj_file`
+-- ----------------------------
+DROP TABLE IF EXISTS `cj_file`;
+CREATE TABLE `cj_file` (
+  `f_id` int(20) NOT NULL AUTO_INCREMENT,
+  `f_url` varchar(200) NOT NULL,
+  `f_name` varchar(200) NOT NULL,
+  `f_article` int(20) NOT NULL,
+  `f_show_as_list` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`f_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cj_file
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `cj_image`
+-- ----------------------------
+DROP TABLE IF EXISTS `cj_image`;
+CREATE TABLE `cj_image` (
+  `i_id` int(20) NOT NULL AUTO_INCREMENT,
+  `i_url` varchar(200) NOT NULL,
+  `i_description` text,
+  `i_article` int(20) NOT NULL,
+  `i_show_as_slider` int(1) NOT NULL DEFAULT '0',
+  `i_show_as_cover` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`i_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cj_image
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `cj_module`
@@ -132,7 +166,7 @@ CREATE TABLE `cj_user` (
 -- ----------------------------
 -- Records of cj_user
 -- ----------------------------
-INSERT INTO `cj_user` VALUES ('1', 'admin', '41d8b5fd1f06d2d430a4162d4dcc2a16', '0', '127.0.0.1', '2013-03-26 16:26:30', '127.0.0.1', '2013-05-02 00:31:03');
+INSERT INTO `cj_user` VALUES ('1', 'admin', '41d8b5fd1f06d2d430a4162d4dcc2a16', '0', '127.0.0.1', '2013-03-26 16:26:30', '10.18.103.55', '2013-05-02 11:35:49');
 INSERT INTO `cj_user` VALUES ('2', 'CoderJ', '41d8b5fd1f06d2d430a4162d4dcc2a16', '1', '127.0.0.1', '2013-03-26 16:27:35', '127.0.0.1', '2013-03-26 17:06:23');
 INSERT INTO `cj_user` VALUES ('3', 'editor', 'ec8df435cdb7a503bb2e8865fccfdd6f', '3', '127.0.0.1', '2013-03-26 16:58:06', '127.0.0.1', '2013-04-11 13:16:12');
 INSERT INTO `cj_user` VALUES ('4', 'contentManage', 'f19f34413723d56c7e3467e3843046a0', '2', '127.0.0.1', '2013-03-26 17:03:50', '127.0.0.1', '2013-03-26 17:04:08');

@@ -55,7 +55,7 @@ KindEditor.plugin('insertfile', function(K) {
 						return;
 					}
 					if (K.trim(title) === '') {
-						title = url;
+						title = url.split('/').reverse()[0];
 					}
 					clickFn.call(self, url, title);
 				}

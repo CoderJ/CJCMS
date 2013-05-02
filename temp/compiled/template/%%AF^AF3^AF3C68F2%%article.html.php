@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-02 00:17:09
+<?php /* Smarty version 2.6.25, created on 2013-05-02 18:11:46
          compiled from admin/article.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -57,13 +57,52 @@ unset($_smarty_tpl_vars);
       <legend>图片</legend>
       <input class="ke-input-text" type="text" id="uploadImageUrl" value="" readonly="readonly" /> 
       <input type="button" id="uploadImageButton" value="上传" /><span class="uploadImageLoading">上传中。。。</span>      
-      <div class="imageMag"></div>
+      <div class="imageMag">
+        <?php $_from = $this->_tpl_vars['article']['image']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+    foreach ($_from as $this->_tpl_vars['k'] => $this->_tpl_vars['v']):
+?>
+          <div class="imageItem">
+            <div class="img">
+              <img src="<?php echo $this->_tpl_vars['v']['i_url']; ?>
+">
+            </div>
+            <input type="hidden" value="<?php echo $this->_tpl_vars['v']['i_url']; ?>
+" name="image[]">
+            <input type="radio" value="<?php echo $this->_tpl_vars['v']['i_url']; ?>
+" name="show_as_cover" title="作为文章封面" <?php if ($this->_tpl_vars['v']['i_show_as_cover'] == 1): ?>checked="checked"<?php endif; ?>>作为封面
+            <br />
+            显示为幻灯片:&emsp;
+            <select class="switch ui-toggle-switch" name="show_as_slider[]">
+              <option value="0" <?php if ($this->_tpl_vars['v']['i_show_as_slider'] == 0): ?>selected="selected"<?php endif; ?>>否</option>
+              <option value="1" <?php if ($this->_tpl_vars['v']['i_show_as_slider'] == 1 || $this->_tpl_vars['v']['i_show_as_slider'] != 0): ?>selected="selected"<?php endif; ?>>是</option>
+            </select>
+          </div>          
+        <?php endforeach; endif; unset($_from); ?>
+      </div>
     </fieldset>
     <fieldset>
       <legend>附件</legend>
       <input class="ke-input-text" type="text" id="uploadFileUrl" value="" readonly="readonly" /> 
       <input type="button" id="uploadFileButton" value="上传" /><span class="uploadFileLoading">上传中。。。</span>      
-      <div class="fileMag"></div>
+      <div class="fileMag">
+        <?php $_from = $this->_tpl_vars['article']['file']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+    foreach ($_from as $this->_tpl_vars['k'] => $this->_tpl_vars['v']):
+?>
+          <div class="fileItem">
+            <span class="fileName"><?php echo $this->_tpl_vars['v']['f_name']; ?>
+</span>
+            <input type="hidden" value="<?php echo $this->_tpl_vars['v']['f_url']; ?>
+" name="file[]">
+            <input type="hidden" value="<?php echo $this->_tpl_vars['v']['f_name']; ?>
+" name="filename[]"> 
+            单独显示:
+            <select class="switch ui-toggle-switch" name="show_as_list[]">
+              <option value="0" <?php if ($this->_tpl_vars['v']['f_show_as_list'] == 0): ?>selected="selected"<?php endif; ?>>否</option>
+              <option value="1" <?php if ($this->_tpl_vars['v']['f_show_as_list'] == 1 || $this->_tpl_vars['v']['f_show_as_list'] != 0): ?>selected="selected"<?php endif; ?>>是</option>
+          </select>
+          </div>        
+       <?php endforeach; endif; unset($_from); ?>
+      </div>
     </fieldset>
 
     <fieldset class="submit">
@@ -90,6 +129,9 @@ $(function(){
     var myDate = new Date();
     $("#addArticleDate").val(myDate.getFullYear()+\'-\'+((myDate.getMonth()+1)>9?(myDate.getMonth()+1):\'0\'+(myDate.getMonth()+1))+\'-\'+(myDate.getDate()>9?myDate.getDate():\'0\'+myDate.getDate()));
   }
+  $(\'.fileItem,.imageItem\').each(function(){
+    $(this).addCloseBtn();
+  })
   var editor;
   KindEditor.ready(function(K) {
     editor = K.create(\'#addArticleContent\', {
@@ -103,10 +145,14 @@ $(function(){
       afterUpload:function(self,data){
         var url = K.formatUrl(data.url, \'absolute\');
         if(data.type == \'image\'){
-        $(\'.imageMag\').append(\'<div class="imagename"><img src="\'+url+\'" width="80" /><input type="hidden" name="image[]" value="\'+url+\'" /><input type="checkbox" title="在页面下方单独显示" name="slideshow[]" />幻灯片显示 <input type="checkbox" title="作为文章封面" name="showascover[]" />作为封面</div>\');
+          var _switch = $(\'<select name="show_as_slider[]" class="switch"><option value="0">否</option><option value="1">是</option></select>\');
+          $(\'<div class="imageItem"><div class="img"><img src="\'+url+\'" /></div><input type="hidden" name="image[]" value="\'+url+\'" /><input type="radio" title="作为文章封面" name="show_as_cover" value="\'+url+\'" />作为封面<br />显示为幻灯片:&emsp;</div>\').append(_switch).addCloseBtn().appendTo(\'.imageMag\');
+          _switch.toggleSwitch();
         }else if(data.type == \'file\'){
-        $(\'.fileMag\').append(\'<div class="filename">\'+data.name+\'<input type="hidden" name="file[]" value="\'+url+\'" /> <input type="checkbox" name="separately[]" title="在页面下方单独显示" />单独显示</div>\');
-        }
+          var _switch = $(\'<select name="show_as_list[]" class="switch"><option value="0">否</option><option value="1">是</option></select>\');
+          $(\'<div class="fileItem"><span class="fileName">\'+data.name+\'</span><input type="hidden" name="file[]" value="\'+url+\'" /><input type="hidden" name="filename[]" value="\'+data.name+\'" /> 单独显示:</div>\').append(_switch).addCloseBtn().appendTo(\'.fileMag\');
+          _switch.toggleSwitch();
+          }
 
       },
       afterCreate : function() {
@@ -129,7 +175,9 @@ $(function(){
       $(\'.uploadImageLoading\').hide();
       if (data.error === 0) {
         var url = K.formatUrl(data.url, \'absolute\');
-        $(\'.imageMag\').append(\'<div class="imagename"><img src="\'+url+\'" width="80" /><input type="hidden" name="image[]" value="\'+url+\'" /><input type="checkbox" title="在页面下方单独显示" name="slideshow[]" checked="checked" />幻灯片显示 <input type="checkbox" title="作为文章封面" name="showascover[]" />作为封面</div>\');
+        var _switch = $(\'<select name="show_as_slider[]" class="switch"><option value="0">否</option><option value="1"  selected="selected">是</option></select>\');
+        $(\'<div class="imageItem"><div class="img"><img src="\'+url+\'" /></div><input type="hidden" name="image[]" value="\'+url+\'" /><input type="radio" title="作为文章封面" name="show_as_cover" value="\'+url+\'" />作为封面<br />显示为幻灯片:&emsp;</div>\').append(_switch).addCloseBtn().appendTo(\'.imageMag\');
+        _switch.toggleSwitch();
 
       } else {
         alert(data.message);
@@ -140,7 +188,7 @@ $(function(){
     }
   });
   uploadImageButton.fileBox.change(function(e) {
-    $(\'.uploadImageLoading\').css(\'display\',\'inline-block\');
+    $(\'.uploadImageLoading\').show();
     uploadImageButton.submit();
   });
   var uploadFileButton = K.uploadbutton({
@@ -151,7 +199,9 @@ $(function(){
       $(\'.uploadFileLoading\').hide();
       if (data.error === 0) {
         var url = K.formatUrl(data.url, \'absolute\');
-        $(\'.fileMag\').append(\'<div class="filename">\'+data.name+\'<input type="hidden" name="file[]" value="\'+url+\'" /> <input type="checkbox" name="separately[]" checked="checked" title="在页面下方单独显示" />单独显示</div>\');
+        var _switch = $(\'<select name="show_as_list[]" class="switch"><option value="0">否</option><option value="1" selected="selected">是</option></select>\');
+        $(\'<div class="fileItem"><span class="fileName">\'+data.name+\'</span><input type="hidden" name="file[]" value="\'+url+\'" /><input type="hidden" name="filename[]" value="\'+data.name+\'" /> 单独显示:</div>\').append(_switch).addCloseBtn().appendTo(\'.fileMag\');
+        _switch.toggleSwitch();
       } else {
         alert(data.message);
       }
@@ -161,7 +211,7 @@ $(function(){
     }
   });
   uploadFileButton.fileBox.change(function(e) {
-    $(\'.uploadFileLoading\').css(\'display\',\'inline-block\');
+    $(\'.uploadFileLoading\').show();
     uploadFileButton.submit();
   });
 });

@@ -2,8 +2,8 @@
   $web_action = '添加文章';
   if($_POST){
     $article = $_POST;
-    print_r($_POST);
     if($id = $basic->get("id","num")){
+      $web_action = '编辑文章';
       $res = $content->updateArticle($article,$id);
     }else{
       $res = $content->addArticle($article);

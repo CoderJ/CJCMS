@@ -216,14 +216,14 @@ window.alert = $.alert = function(msg,time){
   }
   var randomnum = parseInt(Math.random()*1000000000);
   if(time>0){
-    $('<div id="temp_alert_box'+randomnum+'" class="alert_div">'+msg+'</div>').Tips({title:"提示",width:250});
+    $('<div id="temp_alert_box'+randomnum+'" class="alert_div">'+msg+'</div>').Tips({title:"提示",width:300});
     setTimeout(function(){
       $('#temp_alert_box'+randomnum).Tips("close");
       $('#temp_alert_box'+randomnum).parent(".ui-dialog").remove();
       $('#temp_alert_box'+randomnum).remove();
     },time);
   }else{
-    var dialog = $('<div id="temp_alert_box">'+msg+'</div>').dialog({title:"提示",modal:true, buttons: [
+    var dialog = $('<div id="temp_alert_box">'+msg+'</div>').dialog({title:"提示",modal:true,width:300, buttons: [
     {
       text: "确认",
       click: function() { $(this).dialog("close");}
@@ -231,3 +231,13 @@ window.alert = $.alert = function(msg,time){
   dialog.next('.ui-dialog-buttonpane').find("button").width("100%");
   }
 };
+jQuery.fn.addCloseBtn = function () {
+  var _this = $(this);
+  var _btn = $('<div class="closeBtn"><b class="closeBtnTop"></b><b class="closeBtnRight"></b><b class="closeBtnBottom"></b><b class="closeBtnLeft"></b></div>');
+  _btn.click(function(){
+    _this.hide(500,function(){
+      _this.remove();
+    });
+  });
+  return _this.append(_btn);
+}

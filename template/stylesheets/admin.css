@@ -88,3 +88,27 @@ fieldset table tr td b.icon-up{margin-left: 10px;}
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count:infinite;
 }
+
+.imageItem{float: left; width: 200px; height:250px; overflow: hidden; text-align: center; margin:10px; padding:10px; line-height: 150%; position: relative; font-size: 14px;}
+.imageItem input[type="radio"]{ position: relative; top: 3px; margin-right: 3px;}
+.imageItem .closeBtn{ display: none; position: absolute; top: 0px; right:0px; width: 20px; height: 20px;}
+.imageItem{ background:#E4ECEF;}
+.imageItem:hover .closeBtn{ display: block;}
+.imageItem:hover .img{ opacity: 0.5;}
+.imageItem .img{ height: 150px; width: 200px; overflow: hidden; margin-bottom: 25px;}
+.imageItem img{ height: 150px;}
+
+.closeBtn{ width: 20px; height: 20px; overflow: hidden; cursor: pointer;}
+.closeBtn:hover{background: #454545;}
+.closeBtn b.closeBtnTop{ border-color: #7fd0ed transparent transparent transparent; border-style:solid dashed dashed dashed; border-width: 8px; height: 0; overflow: hidden; position: absolute; width: 0;left: 2px;top: 0px;}
+.closeBtn b.closeBtnRight{ border-color:transparent #7fd0ed transparent transparent; border-style:dashed solid dashed dashed; border-width: 8px; height: 0; overflow: hidden; position: absolute; width: 0;right: 0px;top: 2px;}
+.closeBtn b.closeBtnBottom{ border-color:transparent transparent #7fd0ed transparent; border-style:dashed dashed solid dashed; border-width: 8px; height: 0; overflow: hidden; position: absolute; width: 0;left: 2px;bottom: 0px;}
+.closeBtn b.closeBtnLeft{ border-color:transparent transparent transparent #7fd0ed; border-style:dashed dashed dashed solid; border-width: 8px; height: 0; overflow: hidden; position: absolute; width: 0;left: 0px;top: 2px;}
+
+
+.fileItem{float: left; text-align: center; margin:10px; padding:0px 30px 0px 10px; line-height: 100%; position: relative; font-size: 14px;}
+.fileItem .fileName{ color: #333; font-weight: bold; margin: 0px 10px; font-size: 14px;}
+.fileItem input[type="radio"]{ position: relative; top: 3px; margin-right: 3px;}
+.fileItem .closeBtn{ display: none; position: absolute; top: 0px; right:0px; width: 20px; height: 20px;}
+.fileItem{ background:#E4ECEF;}
+.fileItem:hover .closeBtn{ display: block;}

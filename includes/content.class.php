@@ -135,22 +135,126 @@ class content{
     }
 
     public function addArticle($c){
-        if(!$c['content']){
-        return $res = array('code'=>0,'msg'=>'内容不能为空'.$sql,'article'=>$c);
-        }
         $article = array('a_title' => $c['title'],'a_author'=>$this->uid,'a_source' => $c['source'],'a_content'=>htmlspecialchars($c['content']),'a_date'=>$c['date'],'a_status'=>$c['status'],'a_category'=>$c['category'], a_creatTime=>date('Y-m-d H:i:s') );
+        if(!$c['content']){
+            return $res = array('code'=>0,'msg'=>'内容不能为空','article'=>$article);
+        }
         $this->db->insert(db_pre."article",$article);
         $insert_id = $this->db->insert_id();
+
+
+        $addImageRes = $this->addImages($c,$insert_id);
+        if($addImageRes['code'] != 1){
+            return $addImageRes;
+        }else{
+            $article['image'] = $addImageRes['image'];
+        }
+        
+        $addFilesRes = $this->addFiles($c,$insert_id);
+        if($addFilesRes['code'] != 1){
+            return $addFilesRes;
+        }else{
+            $article['file'] = $addFilesRes['file'];
+        }
+
         if($insert_id>0){
             return $res = array('code'=>1,'msg'=>'文章添加成功');
         }else{
-            return $res = array('code'=>0,'msg'=>'数据库操作失败'.$sql,'article'=>$c);
+            return $res = array('code'=>0,'msg'=>'数据库操作失败'.$sql,'article'=>$article);
         }
     }
 
-    public function getArticle($id){
+    public function updateArticle($c,$id){
+        if(!$c['content']){
+            return $res = array('code'=>0,'msg'=>'内容不能为空','article'=>$article);
+        }
+        $article = array('a_title' => $c['title'],'a_author'=>$this->uid,'a_source' => $c['source'],'a_content'=>htmlspecialchars($c['content']),'a_date'=>$c['date'],'a_status'=>$c['status'],'a_category'=>$c['category'], a_creatTime=>date('Y-m-d H:i:s') );
+        $this->db->update(db_pre."article",$article,'a_id='.$id);
 
+        $addImageRes = $this->addImages($c,$id);
+        if($addImageRes['code'] != 1){
+            return $addImageRes;
+        }else{
+            $article['image'] = $addImageRes['image'];
+        }
+        
+        $addFilesRes = $this->addFiles($c,$id);
+        if($addFilesRes['code'] != 1){
+            return $addFilesRes;
+        }else{
+            $article['file'] = $addFilesRes['file'];
+        }
+        
+        return $res = array('code'=>1,'msg'=>'文章修改成功','article'=>$article);
     }
+
+    public function addImages($c,$id){
+        $delSql = 'DELETE FROM '.db_pre.'image WHERE i_article = '.$id.';';
+        $this->db->query($delSql);
+        $image = array();
+        foreach ($c['image'] as $k => $v) {
+            $insertArr = array('i_url'=>$v,'i_article'=>$id,'i_show_as_slider'=>$c['show_as_slider'][$k],'i_show_as_cover'=>(($c['show_as_cover'] == $v)?1:0) );
+            array_push($image, $insertArr);
+            $this->db->insert(db_pre.'image',$insertArr);
+            $insert_id = $this->db->insert_id();
+            if($insert_id< 0){
+                return $res = array('code'=>0,'msg'=>'图片数据库操作失败','image'=>$image);
+            }
+        }        
+        return $res = array('code'=>1,'msg'=>'图片添加成功','image'=>$image);
+    }
+
+    public function addFiles($c,$id){
+        $delSql = 'DELETE FROM '.db_pre.'file WHERE f_article = '.$id.';';
+        $this->db->query($delSql);
+        $file = array();
+        foreach ($c['file'] as $k => $v) {
+            $insertArr = array('f_url'=>$v,'f_article'=>$id,'f_show_as_list'=>$c['show_as_list'][$k],'f_name'=>$c['filename'][$k] );
+            array_push($file, $insertArr);
+            $this->db->insert(db_pre.'file',$insertArr);
+            $insert_id = $this->db->insert_id();
+            if($insert_id< 0){
+                return $res = array('code'=>0,'msg'=>'文件数据库操作失败','file'=>$file);
+            }
+        }        
+        return $res = array('code'=>1,'msg'=>'文件添加成功','file'=>$file);
+    }
+
+
+    public function getArticle($id){
+        $sql = 'SELECT * FROM '.db_pre.'article WHERE a_id = "'.$id.'"; ';
+        $res = $this->db->getone($sql);
+        if(!$res){
+            header('Location: /admin/');
+        }
+        $res['image'] = $this->getImages($id);
+        $res['file'] = $this->getFiles($id);
+        return $res;
+    }
+
+    public function getImages($id){
+        $sql = 'SELECT * FROM '.db_pre.'image ';
+        if($id){
+            $sql .= 'WHERE i_article = '.$id.' ';
+        }
+        $sql .= 'ORDER BY i_id DESC ;';
+        $res = $this->db->getall($sql);
+
+        return $res;
+    }
+
+    public function getFiles($id){
+        $sql = 'SELECT * FROM '.db_pre.'file ';
+        if($id){
+            $sql .= 'WHERE f_article = '.$id.' ';
+        }
+        $sql .= 'ORDER BY f_id DESC ;';
+
+        $res = $this->db->getall($sql);
+
+        return $res;
+    }
+
 }
 
 ?>
