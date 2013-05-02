@@ -1,0 +1,18 @@
+<div class="left-sidebar menu">
+  <ul>
+    {foreach from=$menu key=k item=v}
+    <li>
+      <a href="?act={$v.md_key}" {if $v.md_key == $action}class="active"{/if}>{$v.md_name}</a>
+      {if $v.children}
+      <ul>
+        {foreach from=$v.children key=ck item=cv}
+        <li>
+          <a href="?act={$cv.md_key}"{if $cv.md_key == $action}class="active"{/if}>{$cv.md_name}</a>
+        </li>
+        {/foreach}
+      </ul>
+      {/if}
+    </li>
+    {/foreach}
+  </ul>
+</div>

@@ -1,0 +1,14 @@
+{include file='admin/header.html'}
+<div class="container">
+  <fieldset>
+    <legend>{$web_action}</legend>
+    <table width="100%">
+      <tbody>
+    {foreach from=$serverInfo key=k item=v}
+      <tr><td>{$k}</td><td>{$v}</td></tr>
+    {/foreach}  
+      </tbody>
+    </table>
+</fieldset>
+</div>
+{include file='admin/footer.html'}

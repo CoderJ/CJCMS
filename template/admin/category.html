@@ -1,0 +1,49 @@
+{include file='admin/header.html'}
+<div class="container">
+  {if $msg}
+  <div class="msg msg_{$msg.type}">
+    {$msg.msg}
+  </div>
+  {/if}
+
+  <form id="addCategory" method='post'>
+    <fieldset>
+      <legend>{$web_action}</legend>
+      <label for="addCategoryName">类别名称: </label>
+      <input id="addCategoryName" type="text" name="name" checkVal="notnull" value="{if $categoryInfo}{$categoryInfo.cg_name}{/if}" /><br />
+      <label for="addCategoryParent">类别类型: </label>
+      <select id="addCategoryParent" name="type" checkVal="notNull">
+        {foreach from=$categoryType key=k item=v}
+          <option value="{$k}" {if $categoryInfo.cg_type eq $k}selected="selected"{/if}>{$v}</option>
+        {/foreach}
+      </select><br />    
+      <label for="addCategoryParent">父类别: </label>
+      <select id="addCategoryParent" name="parent" checkVal="notNull">
+        <option value="0">无</option>
+        {foreach from=$allCategory key=k item=v}
+        <option value="{$v.cg_id}" {if $categoryInfo.cg_parent eq $v.cg_id}selected="selected"{/if}>{$v.cg_name}</option>
+        {/foreach}
+      </select><br />
+      <label for="addCategoryParent">是否发布: </label>
+      <select id="addCategoryParent" name="public" class="switch">
+        <option value="0" {if $categoryInfo.cg_public == 0}selected="selected"{/if}>否</option>
+        <option value="1" {if $categoryInfo.cg_public eq 1 || $categoryInfo.cg_public != 0}selected="selected"{/if}>是</option>
+      </select>
+      <br />
+    </fieldset>
+    <fieldset class="submit">
+      <input type="button" id="pageReset" value="取消" />
+      <input type="button" id="pageSubmit" value="提交" />
+    </fieldset>
+  </form>
+</div>
+{include file='admin/footer.html'}
+{literal}
+<script type="text/javascript">
+$(function(){
+  $('#pageSubmit').click(function(){
+    checkForm($('#addCategory'));
+  });
+})
+</script>
+{/literal}

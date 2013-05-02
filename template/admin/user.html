@@ -1,0 +1,76 @@
+{include file='admin/header.html'}
+<div class="container">
+  {if $msg}
+  <div class="msg msg_{$msg.type}">
+    {$msg.msg}
+  </div>
+  {/if}
+  <form id="addUser" method='post'>
+    <fieldset>
+      <legend>帐号密码</legend>
+      <label for="addUserName">用户名: </label>
+      <input id="addUserName" type="text" name="username" checkVal="noSpceialChars" value="{if $userInfo}{$userInfo.username}{/if}" /><br />
+      <label for="addUserPwd">密&emsp;码: </label>
+      <input id="addUserPwd" type="text" name="userpwd" {if $editUser}{else}checkVal="pwd"{/if} value="{if $userInfo}{$userInfo.userpwd}{/if}" /><br />
+      <label for="addUserGroup">用户组: </label>
+      <select id="addUserGroup" name="usergroup" checkVal="notNull">
+        {foreach from=$userGroup key=k item=v}
+        <option value="{$k}"  {if $userInfo.usergroup eq $k}selected="selected"{/if}>{$v}</option>
+        {/foreach}
+      </select><br />
+    </fieldset>
+    <fieldset>
+      <legend>权限分配</legend>
+    <ul>
+      {foreach from=$allMenu key=k item=v}
+      <li>
+        <label for="selRights_{$v.md_key}">{$v.md_name}</label><input id="selRights_{$v.md_key}" name="userrights[]" type="checkbox" value="{$v.md_id}" 
+        {if $userInfo.userrights}
+          {foreach from=$userInfo.userrights key=urk item=urv}
+            {if $urv == $v.md_id}checked="checked"{/if}
+          {/foreach} 
+        {/if} />  
+        {if $v.children}
+        <ul>
+          {foreach from=$v.children key=ck item=cv}
+          <li>
+            <label for="selRights_{$cv.md_key}">{$cv.md_name}</label><input id="selRights_{$cv.md_key}" name="userrights[]" type="checkbox" value="{$cv.md_id}" 
+            {if $userInfo.userrights}
+              {foreach from=$userInfo.userrights key=urk item=urv}
+                {if $urv == $cv.md_id}checked="checked"{/if}
+              {/foreach} 
+            {/if} />
+          </li>
+          {/foreach}
+        </ul>
+        {/if}
+      </li>
+      {/foreach}
+    </ul>
+    </fieldset>
+    <fieldset class="submit">
+      <input type="button" id="pageReset" value="取消" />
+      <input type="button" id="pageSubmit" value="提交" />
+    </fieldset>
+  </form>
+</div>
+{include file='admin/footer.html'}
+{literal}
+<script type="text/javascript">
+$(function(){
+  $('fieldset ul li input[type="checkbox"]').change(function(){
+    if($(this).closest('li').find('ul li').length>0){
+      if($(this).attr('checked')){
+        $(this).closest('li').find('ul li input[type="checkbox"]').attr('checked','true');
+      }else{
+        $(this).closest('li').find('ul li input[type="checkbox"]').removeAttr('checked');
+      }
+    }
+  });
+
+  $('#pageSubmit').click(function(){
+    checkForm($('#addUser'));
+  });
+})
+</script>
+{/literal}

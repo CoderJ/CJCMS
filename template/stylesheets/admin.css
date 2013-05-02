@@ -1,0 +1,90 @@
+body{text-align:justify; background: #E0E0E0;}
+
+.toolbar{position: fixed; top: 0px; left: 0px; right: 0px; padding:0 20px; height:43px; background:#e4ecef; color: #51818f;  border-bottom:1px solid #dadfe2; line-height:43px; text-align:right; z-index:1000;}
+.toolbar a,.toolbar a:visited { color:#5F777E;}
+.toolbar h2{ float: left; margin: 0px 20px; font-size: 16px; line-height: 43px; }
+
+
+.loginform{text-align: center; padding-top: 200px;}
+.loginform fieldset{width:400px; margin:0 auto; text-align: justify;}
+
+
+b.icon-up{border-color:transparent transparent #B2B2B2 transparent; border-style:dashed dashed solid dashed; border-width: 5px; height: 0; overflow: hidden; position: absolute; width: 0; margin-left: 10px;left: 20px;top: 17px;}
+b.icon-right{border-color:transparent transparent transparent #B2B2B2 ; border-style: dashed dashed dashed solid; border-width: 5px; height: 0; overflow: hidden; position: absolute; width: 0;left: 20px;top: 17px;}
+
+.left-sidebar{ width: 18%;background: #fafafa;margin: 0;text-align: left:0; padding:45px 0px 0px; position: absolute; bottom: 0px; top: 0px; z-index: 1;}
+.left-sidebar ul{padding:0px; background: #fafafa; margin:0px;}
+.left-sidebar ul li { list-style: none; padding:0px 16px; position: relative;}
+.left-sidebar ul li.has-children b.icon-right{position: absolute;right:20px;top:17px; left:auto;}
+.left-sidebar ul li ul{display: none;}
+.left-sidebar ul li ul li{ list-style: none; padding:0px; text-indent: 20px;}
+.left-sidebar ul li a{color:#303030; height: 43px; margin: 0; font-size: 14px; line-height: 43px; display: block; padding:0px 20px; border-bottom: 1px solid #e5e5e5;}
+.left-sidebar ul li a:hover{background: #7fd0ed;}
+.left-sidebar ul li a.active{background: #e4ecef;}
+.container{ position: absolute; background: #E0E0E0; top: 43px;right: 0px; bottom: 0px; overflow: auto; left:18%; z-index: 10; text-align: left; padding: 20px;}
+
+fieldset{ border:2px solid #FFF; background: #FFF; line-height: 300%; padding:0px 20px 10px; margin-bottom: 20px; z-index: 10;}
+fieldset legend{color: #51818F; font-size: 16px; }
+form fieldset label{width: 100px; text-align: right; display: inline-block; font-size: 14px; padding: 0px 20px; color: #333;}
+form fieldset .ui-toggle-switch label {padding:0; line-height: 45px;}
+form fieldset input[type='text'],form fieldset input[type='password']{ border: 1px solid #C9C9C9; border-width: 0px 0px 1px; font-size: 14px; width: 200px; height: 24px; line-height: 24px; background: none; color: #333;}
+form fieldset input[type='text'].title{width:400px;}
+form fieldset textarea.article{width:100%; height: 500px;}
+form fieldset input[type='text'].input-red{ border-color:#F00; color:#F00;}
+.select { display: inline-block; width: 200px; height: 29px; position: relative;}
+.select b.icon-downlist{position: absolute; bottom: 0px; right: 0px; border-color:transparent #B2B2B2 #B2B2B2 transparent; border-style: dashed solid solid dashed; border-width: 5px; height: 0; overflow: hidden; position: absolute; width: 0;}
+.select input.selected{cursor: default;}
+.select ul{display: none; position: absolute; top: 22px;background: #FFF; width: 198px; padding: 0px; border: 1px solid #C9C9C9; border-width: 0px 1px 1px; z-index: 999;}
+.select ul li{ list-style: none; text-indent: 2px; cursor: default; height: 25px; line-height: 25px; z-index: 999;}
+.select ul li:hover,.select ul li.focus{background: #7fd0ed;}
+form fieldset input[type="checkbox"]{position: relative; top: 3px; height: 15px; width: 15px; z-index: 10;}
+
+fieldset ul { padding-left: 0px; }
+fieldset ul li label{ font-size: 16px;}
+fieldset ul li ul{border-top: 1px solid #CCC; margin-bottom: 20px;}
+fieldset ul li ul li{ display: inline-block;}
+fieldset ul li ul li label{ font-size: 14px;}
+
+fieldset.submit{ text-align: center; padding: 10px;}
+fieldset input[type='button']{ height: 32px; line-height: 32px; background: #DEDEDE; border: none; font-size: 14px; padding: 0 20px;}
+fieldset input[type='button']:hover{ background:#7fd0ed; }
+fieldset input[type='button']:focus{ color: #333; box-shadow:0px 0px 1px #333; }
+
+.input-tips{ margin-left: 20px;position: absolute;}
+.input-warning{ color:#F00;}
+
+.msg { margin: 0 2px; padding: 5px 10px;}
+.msg_warning { background:#FFA400;}
+.msg_tips { background:#00A400; }
+
+fieldset table{ border: 1px solid #E5E5E5; border-width: 1px 0px; overflow: hidden;}
+fieldset table thead tr th { text-align: center; height: 43px;border-top: 1px solid #E5E5E5; background: #EEE; color:#333; }
+fieldset table tr td { text-align: center; height: 43px;border-top: 1px solid #E5E5E5; position: relative; display: table-cell; }
+fieldset table tr td div.r{position: relative; height: 100%; width: 0px; float:right; }
+fieldset table tr:hover td {background:#7fd0ed;}
+fieldset table tr td .do-list{display: block; position: absolute; right: 0px; height: 100%; width: 0px; top:0px; background: #000; background: rgba(0,0,0,0.8);}
+fieldset table tr td .do-list a{display: inline-block; width: 80px; height: 43px; line-height: 43px; color:#CCC; font-size: 14px; cursor: pointer;}
+fieldset table tr td.order input[type="text"]{text-align: center; width: 50px;}
+fieldset table tr td b.icon-up{margin-left: 10px;}
+
+@-webkit-keyframes loading {
+     0% {
+      opacity: 0.3;
+     }
+     50% {
+      opacity: 1;
+     }
+     100% {
+      opacity: 0.3;
+     }
+ }
+.uploadFileLoading, .uploadImageLoading{
+  color:#333;
+  display: none;
+  overflow: hidden;
+  padding: 0px 10px;
+  -webkit-animation-name: loading;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count:infinite;
+}

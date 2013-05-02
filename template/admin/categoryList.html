@@ -1,0 +1,74 @@
+{include file='admin/header.html'}
+<div class="container">
+  {if $msg}
+  <div class="msg msg_{$msg.type}">
+    {$msg.msg}
+  </div>
+  {/if}
+  <form id="categoryList" method='post'>
+    <fieldset>
+      <legend>{$web_action}</legend>
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <thead>
+          <tr>
+            <th></th>
+            <th>类别名称</th>
+            <th>排序</th>
+            <th>是否发布</th>
+            <th>类别类型</th>
+            <th>父类别</th>
+          </tr>
+        </thead>
+        {foreach from=$category key=k item=v}
+        <tr id="user_{$v.cg_id}" class="on">
+          <td>
+            <div class="r">
+            {if $v.level == 0}
+              <b class="icon-right"></b>
+            {else}
+              <b class="icon-up" style='margin-left:{$v.level*15-5}px;'></b>
+            {/if}
+            <input type="hidden" name="id[]" value="{$v.cg_id}" />
+          </div>
+          </td>
+          <td>
+            {$v.cg_name}
+          </td>
+          <td class="order"><input type="text" checkval="number" value="{$v.cg_order}" name="order[]" /></td>
+          <td>
+          <select id="addCategoryParent" name="public[]" class="switch">
+            <option value="0" {if $v.cg_public == 0}selected="selected"{/if}>否</option>
+            <option value="1" {if $v.cg_public eq 1 || $v.cg_public != 0}selected="selected"{/if}>是</option>
+          </select>
+          </td>
+          <td val="{$v.user_group.0}">{$v.cg_type_name}</td>
+          <td>{$v.cg_parent_name}</td>
+          <td><div class="r"><div class="do-list"><a href="?act=category&id={$v.cg_id}"><b class="icon-edit"></b>编辑</a>
+            <a class="deleteCategory" href="?act=categoryList&do={$v.cg_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>
+        </tr>
+        {/foreach}
+      </table>
+    </fieldset>
+    <fieldset class="submit">
+      <input type="button" id="listReset" value="取消" />
+      <input type="button" id="listSubmit" value="修改" />
+    </fieldset>
+
+  </form>
+</div>
+{include file='admin/footer.html'}
+{literal}
+<script type="text/javascript">
+$(function(){
+  $("#listSubmit").click(function(){
+    checkForm($('#categoryList'));
+  });  
+  $('.deleteCategory').click(function(){
+    var _this = $(this);
+    confirm_msg("确认删除","&emsp;确定要删除该类别么？该操作将不可恢复！",function(){
+      location.href=_this.attr("href");
+    });
+  });
+})
+</script>
+{/literal}

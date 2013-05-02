@@ -1,0 +1,24 @@
+{include file='admin/header.html'}
+<form class="loginform" id="loginForm" method="post">
+  <fieldset>
+    <legend>登录</legend>
+    <label for="userName">用户名: </label>
+      <input id="userName" type="text" name="username" checkVal="noSpceialChars" /><br />
+    <label for="userPwd">密码: </label>
+      <input id="userPwd" type="password" name="userpwd" checkVal="pwd" /><br />
+      <div style="text-align:center; margin-top:20px;">
+        <input type="button" id="listReset" value="取消" />
+        <input type="button" id="listSubmit" value="登录" />
+      </div>
+  </fieldset>
+</form>
+{include file='admin/footer.html'}
+{literal}
+<script type="text/javascript">
+$(function(){
+  $("#listSubmit").click(function(){
+    checkForm($('#loginForm'));
+  });  
+})
+</script>
+{/literal}

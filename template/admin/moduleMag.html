@@ -1,0 +1,84 @@
+{include file='admin/header.html'}
+<div class="container">
+  {if $msg}
+  <div class="msg msg_{$msg.type}">
+    {$msg.msg}
+  </div>
+  {/if}
+<form method="post" id="moduleList">
+  <input type="hidden" name="type" value="update"/>  
+  <fieldset>
+    <legend>模块列表</legend>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th></th>
+          <th>模块ID</th>
+          <th>模块名称</th>
+          <th>排序</th>
+          <th width="50"></th>
+        </tr>
+      </thead>
+    {foreach from=$menu key=k item=v}
+    <tr>
+      <td><div class="r"><b class="icon-right"></b><input type="hidden" name="id[]" value="{$v.md_id}" /></div></td><td><input type="text" name="key[]" value="{$v.md_key}" checkVal="notnull" /></td><td><input name="name[]" type="text" value="{$v.md_name}" checkVal="notnull" /></td><td class="order"><input name="order[]" type="text" value="{$v.md_order}" class="order" checkVal="number" /></td>        
+      <td><div class="r"><div class="do-list"><a class="deleteModule" href="/admin/?act=moduleMag&do={$v.md_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>
+    </tr>
+      {if $v.children}
+        {foreach from=$v.children key=ck item=cv}
+        <tr>
+      <td><div class="r"><b class="icon-up"></b><input type="hidden" name="id[]" value="{$cv.md_id}" /></div></td><td><input name="key[]" type="text" value="{$cv.md_key}" checkVal="notnull" /></td><td><input name="name[]" type="text" value="{$cv.md_name}" checkVal="notnull" /></td><td class="order"><input name="order[]" type="text" value="{$cv.md_order}" checkVal="number" /></td>        
+      <td><div class="r"><div class="do-list"><a class="deleteModule"  href="/admin/?act=moduleMag&do={$cv.md_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td><td></td>
+        </tr>
+        {/foreach}
+      {/if}
+    {/foreach}
+    </table>
+  </fieldset>
+  <fieldset class="submit">
+    <input type="button" id="listReset" value="取消" />
+    <input type="button" id="listSubmit" value="修改" />
+  </fieldset>
+</form>
+
+<form method="post" id="moduleAdd">
+  <input type="hidden" name="type" value="add"/>  
+  <fieldset>
+    <legend>添加模块</legend>
+    <label for="addUserName">模块ID: </label>
+    <input id="addUserName" type="text" name="key" checkVal="noSpceialChars" value="{if $moduleInfo}{$moduleInfo.md_key}{/if}" /><br />
+    <label for="addUserPwd">模块名称: </label>
+    <input id="addUserPwd" type="text" name="name" checkVal="notnull" value="{if $moduleInfo}{$moduleInfo.md_name}{/if}" /><br />
+    <label for="addUserGroup">父模块: </label>
+    <select id="addUserGroup" name="parent" checkVal="notNull">
+      <option value="0">无</option>
+      {foreach from=$menu key=k item=v}
+      <option value="{$v.md_id}" {if $moduleInfo.md_parent eq $v.md_id}selected="selected"{/if}>{$v.md_name}</option>
+      {/foreach}
+    </select><br />
+  </fieldset>
+  <fieldset class="submit">
+    <input type="button" id="addReset" value="取消" />
+    <input type="button" id="addSubmit" value="添加" />
+  </fieldset>
+</form>
+</div>
+{include file='admin/footer.html'}
+{literal}
+<script type="text/javascript">
+$(function(){
+  $("#listSubmit").click(function(){
+    checkForm($('#moduleList'));
+  });  
+  $("#addSubmit").click(function(){
+    checkForm($('#moduleAdd'));
+  });
+  $('.deleteModule').click(function(){
+    var _this = $(this);
+    confirm_msg("确认删除","&emsp;确定要删除该模块么？该操作将不可恢复！",function(){
+      location.href=_this.attr("href");
+    });
+  });
+})
+</script>
+{/literal}

@@ -1,0 +1,76 @@
+{include file='admin/header.html'}
+<div class="container">
+  {if $msg}
+  <div class="msg msg_{$msg.type}">
+    {$msg.msg}
+  </div>
+  {/if}
+  <form id="searchUser" method='post'>
+    <fieldset>
+      <legend>用户搜索</legend>
+      <label for="addUserName">用户名: </label>
+      <input id="addUserName" type="text" name="username" checkVal="noSpceialChars" value="{if $userInfo}{$userInfo.username}{/if}" /> <label for="addUserGroup">用户组: </label>
+      <select id="addUserGroup" name="usergroup" checkVal="notNull">
+        <option value=""  {if $userInfo.usergroup eq $k}selected="selected"{/if}>全部</option>
+        {foreach from=$userGroup key=k item=v}
+        <option value="{$k}"  {if $userInfo.usergroup eq $k}selected="selected"{/if}>{$v}</option>
+        {/foreach}
+      </select>      
+      <input type="button" id="userSearch" value="搜索" />
+      <br />
+    </fieldset>
+  </form>
+  <fieldset>
+    <legend>用户列表</legend>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th>用户名</th>
+          <th>用户组</th>
+          <th>用户注册时IP</th>
+          <th>用户注册时间</th>
+          <th>用户最后登录IP</th>
+          <th>用户最后登录时间</th>
+        </tr>
+      </thead>
+      {foreach from=$userList key=k item=v}
+      <tr id="user_{$v.user_id}" class="on">
+        <td>{$v.user_name}</td>
+        <td val="{$v.user_group.0}">{$v.user_group.1}</td>
+        <td>{$v.user_reg_ip}</td>
+        <td>{$v.user_reg_time}</td>
+        <td>{$v.user_last_login_ip}</td>
+        <td>{$v.user_last_login_time}</td>
+        <td><div  class="r"><div class="do-list"><a href="?act=user&id={$v.user_id}"><b class="icon-edit"></b>编辑</a>
+          <a class="deleteUser" href="?act=userList&do={$v.user_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>
+      </tr>
+      {/foreach}
+    </table>
+  </fieldset>
+</div>
+{include file='admin/footer.html'}
+{literal}
+<script type="text/javascript">
+$(function(){
+  $('fieldset ul li input[type="checkbox"]').change(function(){
+    if($(this).closest('li').find('ul li').length>0){
+      if($(this).attr('checked')){
+        $(this).closest('li').find('ul li input[type="checkbox"]').attr('checked','true');
+      }else{
+        $(this).closest('li').find('ul li input[type="checkbox"]').removeAttr('checked');
+      }
+    }
+  });
+
+  $('#userSearch').click(function(){
+    $("#searchUser").submit();
+  });
+  $('.deleteUser').click(function(){
+    var _this = $(this);
+    confirm_msg("确认删除","&emsp;确定要删除该用户么？该操作将不可恢复！",function(){
+      location.href=_this.attr("href");
+    });
+  });
+})
+</script>
+{/literal}
