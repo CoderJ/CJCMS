@@ -66,7 +66,8 @@ fieldset table tr td .do-list{display: block; position: absolute; right: 0px; he
 fieldset table tr td .do-list a{display: inline-block; width: 80px; height: 43px; line-height: 43px; color:#CCC; font-size: 14px; cursor: pointer;}
 fieldset table tr td.order input[type="text"]{text-align: center; width: 50px;}
 fieldset table tr td b.icon-up{margin-left: 10px;}
-
+fieldset .filterItem{ float: left; width: 350px; }
+fieldset .filterItem.long{ float: left; width: 440px;}
 @-webkit-keyframes loading {
      0% {
       opacity: 0.3;
@@ -112,3 +113,9 @@ fieldset table tr td b.icon-up{margin-left: 10px;}
 .fileItem .closeBtn{ display: none; position: absolute; top: 0px; right:0px; width: 20px; height: 20px;}
 .fileItem{ background:#E4ECEF;}
 .fileItem:hover .closeBtn{ display: block;}
+tr:hover td.pagenav{ background: none;}
+.pagenav{ text-align: right;}
+.pagenav span.count{ float: left;}
+.pagenav a{display: inline-block; padding: 0px 10px; height: 30px; line-height: 30px; background: #e4ecef; color:#333; cursor: pointer;}
+.pagenav a:hover,.pagenav a.on{ background: #7fd0ed;}
+.pagenav a:hover{ color: #FFF;}

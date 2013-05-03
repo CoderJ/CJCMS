@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50529
+Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : mspms
 
 Target Server Type    : MYSQL
-Target Server Version : 50529
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2013-05-02 17:42:33
+Date: 2013-05-03 10:44:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,15 +49,19 @@ CREATE TABLE `cj_category` (
   `cg_public` tinyint(1) NOT NULL DEFAULT '1',
   `cg_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cg_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cj_category
 -- ----------------------------
-INSERT INTO `cj_category` VALUES ('1', '专业介绍', 'page', '0', '1', '1');
 INSERT INTO `cj_category` VALUES ('2', '专业简介', 'page', '1', '1', '1');
 INSERT INTO `cj_category` VALUES ('4', '组织架构', 'page', '1', '1', '2');
 INSERT INTO `cj_category` VALUES ('6', '什么什么实验室', 'article', '4', '1', '0');
+INSERT INTO `cj_category` VALUES ('7', '文章类别', 'article', '0', '1', '0');
+INSERT INTO `cj_category` VALUES ('8', '单页类别', 'page', '0', '1', '0');
+INSERT INTO `cj_category` VALUES ('9', '相册类别', 'album', '0', '1', '0');
+INSERT INTO `cj_category` VALUES ('10', '视频类别', 'video', '0', '1', '0');
+INSERT INTO `cj_category` VALUES ('11', '问答类别', 'qa', '0', '1', '0');
 
 -- ----------------------------
 -- Table structure for `cj_file`
@@ -105,7 +109,7 @@ CREATE TABLE `cj_module` (
   `md_order` int(3) NOT NULL DEFAULT '0',
   `md_parent` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`md_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cj_module
@@ -114,13 +118,17 @@ INSERT INTO `cj_module` VALUES ('1', 'userMag', '用户管理', '0', '0');
 INSERT INTO `cj_module` VALUES ('2', 'articleMag', '内容管理', '0', '0');
 INSERT INTO `cj_module` VALUES ('3', 'user', '添加用户', '0', '1');
 INSERT INTO `cj_module` VALUES ('4', 'userList', '用户列表', '0', '1');
-INSERT INTO `cj_module` VALUES ('5', 'article', '添加文章', '0', '2');
+INSERT INTO `cj_module` VALUES ('5', 'article', '添加文章', '1', '2');
 INSERT INTO `cj_module` VALUES ('6', 'contentList', '内容列表', '0', '2');
 INSERT INTO `cj_module` VALUES ('7', 'categoryMag', '类别管理', '0', '0');
 INSERT INTO `cj_module` VALUES ('8', 'category', '添加类别', '0', '7');
 INSERT INTO `cj_module` VALUES ('9', 'categoryList', '类别列表', '0', '7');
 INSERT INTO `cj_module` VALUES ('10', 'moduleMag', '模块管理', '8', '0');
 INSERT INTO `cj_module` VALUES ('11', 'serverInfo', '服务信息', '9', '0');
+INSERT INTO `cj_module` VALUES ('12', 'page', '添加单页', '2', '2');
+INSERT INTO `cj_module` VALUES ('13', 'album', '添加相册', '3', '2');
+INSERT INTO `cj_module` VALUES ('14', 'video', '添加视频', '4', '2');
+INSERT INTO `cj_module` VALUES ('15', 'qa', '添加问答', '5', '2');
 
 -- ----------------------------
 -- Table structure for `cj_module_user`
@@ -166,7 +174,7 @@ CREATE TABLE `cj_user` (
 -- ----------------------------
 -- Records of cj_user
 -- ----------------------------
-INSERT INTO `cj_user` VALUES ('1', 'admin', '41d8b5fd1f06d2d430a4162d4dcc2a16', '0', '127.0.0.1', '2013-03-26 16:26:30', '10.18.103.55', '2013-05-02 11:35:49');
+INSERT INTO `cj_user` VALUES ('1', 'admin', '41d8b5fd1f06d2d430a4162d4dcc2a16', '0', '127.0.0.1', '2013-03-26 16:26:30', '127.0.0.1', '2013-05-03 00:10:57');
 INSERT INTO `cj_user` VALUES ('2', 'CoderJ', '41d8b5fd1f06d2d430a4162d4dcc2a16', '1', '127.0.0.1', '2013-03-26 16:27:35', '127.0.0.1', '2013-03-26 17:06:23');
 INSERT INTO `cj_user` VALUES ('3', 'editor', 'ec8df435cdb7a503bb2e8865fccfdd6f', '3', '127.0.0.1', '2013-03-26 16:58:06', '127.0.0.1', '2013-04-11 13:16:12');
 INSERT INTO `cj_user` VALUES ('4', 'contentManage', 'f19f34413723d56c7e3467e3843046a0', '2', '127.0.0.1', '2013-03-26 17:03:50', '127.0.0.1', '2013-03-26 17:04:08');

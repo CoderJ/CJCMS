@@ -16,9 +16,9 @@ class content{
         $this->uid = $_SESSION['user']['user_id'];
 
     }
-    public function getAllCategory($show){
+    public function getAllCategory($show,$type){
         $show = $show?$show:'all';
-        $category = $this->getCategory($show);
+        $category = $this->getCategory($show,Null,Null,$type);
         $c = array();
         foreach ($category as $key => $value) {
             $pre = '';
@@ -38,7 +38,13 @@ class content{
                      'qa'=>'问答'
                     );
     }
-
+    public function getArticleStatus(){
+        return array('locked'=>'被锁定',
+                     'published'=>'已发布',
+                     'draft'=>'草稿',
+                     'trash'=>'回收站'
+                    );
+    }
     public function addCategory($c){
         if($c['name'] && $c['type']){
             $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public']);
@@ -76,13 +82,16 @@ class content{
         $res = $this->db->getone($sql);
         return $res;
     }
-    public function getCategory($show,$parent,$level){
+    public function getCategory($show,$parent,$level,$type){
         $show = $show?$show:'public';
         $parent = $parent?$parent:0;
         $level = $level?$level:0;
         $categorySql = 'SELECT * FROM '.db_pre.'category WHERE cg_parent = "'.$parent.'" ';
         if($show == 'public'){
             $categorySql .= 'AND cg_public = 1 ';
+        }
+        if($type){
+            $categorySql .= 'AND cg_type = "'.$type.'" ';
         }
         $categorySql .= 'ORDER BY cg_order;';
         $category = $this->db->getall($categorySql);
@@ -92,7 +101,7 @@ class content{
         $res = array();
         foreach($category AS $k=>$v){
             array_push($res, $category[$k]);
-            $rs = $this->getCategory($show,$v['cg_id'],$level+1);
+            $rs = $this->getCategory($show,$v['cg_id'],$level+1,$type);
             foreach ($rs as $key => $value) {
                 array_push($res, $value);
             }
@@ -127,10 +136,11 @@ class content{
         if(!$CategoryInfo['cg_id']){
             header('Location: /admin/?act=categoryList');
         }
-        $delArticle = 'UPDATE * FROM '.db_pre.'article ';
-
         $delSql = 'DELETE FROM '.db_pre.'category WHERE cg_id = '.$id.' ;';
         $del = $this->db->query($delSql);
+
+        $delArticleArr = array('a_status'=>'trash','a_category'=>0);
+        $this->db->update(db_pre.'article',$delArticleArr,'a_category='.$id);
         return $res = array('code'=>1,'msg'=>'删除类别成功');
     }
 
@@ -254,7 +264,88 @@ class content{
 
         return $res;
     }
+    function getArticleParam($type,$category,$status,$keyword){
+        $param = '';
+        if($type){
+            $sql = 'SELECT cg_id FROM '.db_pre.'category WHERE cg_type = "'.$type.'" ';
+            $res = $this->db->getall($sql);
+            $cg = array();
+            foreach($res as $k=>$v){
+                array_push($cg, $v['cg_id']);
+            }
+            $cg = implode(',',$cg);
+            $param .= 'AND a_category IN ('.$cg.') ';
+        }
 
+        if($category){
+            $param .= 'AND a_category = "'.$category.'" ';
+        }
+        if($status){
+            $param .= 'AND a_status = "'.$status.'" ';
+        }else{
+            $param .= 'AND a_status <> "trash" ';
+        }
+        if($keyword){
+            $param .= 'AND a_title LIKE "%'.$keyword.'%" ';
+        }
+
+        $param = 'WHERE '.substr($param, 3).' ORDER BY a_creatTime DESC';
+
+        return $param;
+
+    }
+
+    public function getAuthorName($article){
+        $sql = 'SELECT user_name FROM '.db_pre.'user WHERE user_id = "'.$article['a_author'].'" ';
+        $res = $this->db->getone($sql);
+        $article['author_name'] = $res['user_name'];
+
+        $sql = 'SELECT cg_name FROM '.db_pre.'category WHERE cg_id = "'.$article['a_category'].'" ';
+        $res = $this->db->getone($sql);
+        $article['category_name'] = $res['cg_name'];
+        $status = $this->getArticleStatus();
+        $article['status'] = $status[$article['a_status']];
+        return $article;
+    }
+
+    public function getArticles($page,$type,$category,$status,$keyword){
+        $sql = 'SELECT * FROM '.db_pre.'article '.$this->getArticleParam($type,$category,$status,$keyword);
+        if(!$page){
+            $page = 1;
+        }
+        if($page){
+            $sql .= ' LIMIT '.(($page-1)*20).',20 ;';
+        }
+        $res = $this->db->getall($sql);
+        foreach ($res as $key => $value) {
+            $res[$key] = $this->getAuthorName($value);
+        }
+        return $res;
+    }
+
+    public function getArticlesCount($page,$type,$category,$status,$keyword){
+        $sql = 'SELECT count(*) as nums FROM '.db_pre.'article '.$this->getArticleParam($type,$category,$status,$keyword);
+        $res = $this->db->getone($sql);
+        $totalNum = $res['nums']?$res['nums']:0;
+        $totalPage = ceil($totalNum/20);
+        return array('count'=>$totalNum,'page'=>$totalPage);
+    }
+
+    public function delArticle($id){
+        $sql = 'SELECT a_status FROM '.db_pre.'article WHERE a_id = '.$id.' ';
+        $res = $this->db->getone($sql);
+        if($res['a_status'] == 'trash'){
+            $delSql = 'DELETE FROM '.db_pre.'article WHERE a_id = '.$id.'; ';
+            $this->db->query($delSql);
+            return $res = array('code'=>1,'msg'=>'文章已被彻底删除');
+        }elseif (!$res['a_status']) {
+            header('Location: /admin/?act=contentList');
+        }else{
+            $updateArr = array('a_status'=>'trash');
+            $this->db->update(db_pre.'article',$updateArr,'a_id='.$id);
+            return $res = array('code'=>1,'msg'=>'文章已被移入回收站');
+        }
+    }
 }
 
 ?>

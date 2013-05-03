@@ -20,7 +20,7 @@
           </tr>
         </thead>
         {foreach from=$category key=k item=v}
-        <tr id="user_{$v.cg_id}" class="on">
+        <tr id="category_{$v.cg_id}" class="on">
           <td>
             <div class="r">
             {if $v.level == 0}
@@ -41,7 +41,7 @@
             <option value="1" {if $v.cg_public eq 1 || $v.cg_public != 0}selected="selected"{/if}>是</option>
           </select>
           </td>
-          <td val="{$v.user_group.0}">{$v.cg_type_name}</td>
+          <td>{$v.cg_type_name}</td>
           <td>{$v.cg_parent_name}</td>
           <td><div class="r"><div class="do-list"><a href="?act=category&id={$v.cg_id}"><b class="icon-edit"></b>编辑</a>
             <a class="deleteCategory" href="?act=categoryList&do={$v.cg_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>

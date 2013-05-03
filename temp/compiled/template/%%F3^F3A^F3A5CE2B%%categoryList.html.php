@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-01 15:45:27
+<?php /* Smarty version 2.6.25, created on 2013-05-03 01:20:04
          compiled from admin/categoryList.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -31,7 +31,7 @@ unset($_smarty_tpl_vars);
         <?php $_from = $this->_tpl_vars['category']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['k'] => $this->_tpl_vars['v']):
 ?>
-        <tr id="user_<?php echo $this->_tpl_vars['v']['cg_id']; ?>
+        <tr id="category_<?php echo $this->_tpl_vars['v']['cg_id']; ?>
 " class="on">
           <td>
             <div class="r">
@@ -57,8 +57,7 @@ px;'></b>
             <option value="1" <?php if ($this->_tpl_vars['v']['cg_public'] == 1 || $this->_tpl_vars['v']['cg_public'] != 0): ?>selected="selected"<?php endif; ?>>是</option>
           </select>
           </td>
-          <td val="<?php echo $this->_tpl_vars['v']['user_group']['0']; ?>
-"><?php echo $this->_tpl_vars['v']['cg_type_name']; ?>
+          <td><?php echo $this->_tpl_vars['v']['cg_type_name']; ?>
 </td>
           <td><?php echo $this->_tpl_vars['v']['cg_parent_name']; ?>
 </td>

@@ -20,5 +20,5 @@
       $smarty->assign('article',$content->getArticle($id));
     }
   }
-  $smarty->assign('allCategory',$content->getAllCategory());
+  $smarty->assign('allCategory',$content->getAllCategory('all','article'));
 ?>

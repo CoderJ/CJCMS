@@ -86,6 +86,11 @@ $(function(){
       },200);
     });
   });
+  $.fn.selectChange = function(callback){
+    $(this).nextAll('ul').find('li').click(function(){
+      callback(this);
+    });
+  }
   //select end
   $(document).find("input,textarea,.select").not('.select input,input[type="checkbox"],input[type="button"],').change(function(){
     checkVal($(this),0);
