@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-02 18:11:46
+<?php /* Smarty version 2.6.25, created on 2013-05-03 13:48:28
          compiled from admin/article.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -14,7 +14,7 @@ unset($_smarty_tpl_vars);
   </div>
   <?php endif; ?>
 
-  <form id="addCategory" method='post'>
+  <form id="addArticle" method='post'>
     <fieldset>
       <legend><?php echo $this->_tpl_vars['web_action']; ?>
 </legend>
@@ -159,11 +159,11 @@ $(function(){
         var self = this;
         K.ctrl(document, 13, function() {
           self.sync();
-          checkForm($(\'#addCategory\'));
+          checkForm($(\'#addArticle\'));
         });
         K.ctrl(self.edit.doc, 13, function() {
           self.sync();
-          checkForm($(\'#addCategory\'));
+          checkForm($(\'#addArticle\'));
         });
       }
     });
@@ -216,7 +216,7 @@ $(function(){
   });
 });
   $(\'#pageSubmit\').click(function(){
-    checkForm($(\'#addCategory\'));
+    checkForm($(\'#addArticle\'));
   });
 })
 </script>

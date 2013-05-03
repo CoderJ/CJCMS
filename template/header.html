@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$web_action}-{$web_name}</title>
+  <link rel="stylesheet" href="/template/stylesheets/normalise.css">
+  <link rel="stylesheet" href="/template/stylesheets/jquery-ui.css">
+  <link rel="stylesheet" href="/template/stylesheets/base.css">
+  <link rel="stylesheet" href="/template/stylesheets/page.css">
+  <script src="/template/javascripts/modernizr-2.0.6.min.js"></script>
+</head>
+<body>
+<div class="header">
+  <div class="nav">
+    <ul>
+      {foreach from=$nav key=k item=v}
+      {if $nav[$k].level_s == '0'}
+        </li><li><a>{$v.cg_name}</a>
+      {elseif $nav[$k].level_s == '+'}
+        <ul></li><li><a>{$v.cg_name}</a>
+      {elseif $nav[$k].level_s == '-'}
+        </li></ul><li><a>{$v.cg_name}</a>
+      {/if}
+      {/foreach}
+    </ul>
+  </div>
+</div>

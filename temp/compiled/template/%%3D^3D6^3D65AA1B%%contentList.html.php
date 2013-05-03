@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-03 01:35:02
+<?php /* Smarty version 2.6.25, created on 2013-05-03 13:44:31
          compiled from admin/contentList.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -105,7 +105,7 @@ unset($_smarty_tpl_vars);
 </td>
           <td><?php echo $this->_tpl_vars['v']['a_creatTime']; ?>
 </td>
-          <td><div class="r"><div class="do-list"><a href="?act=<?php echo $this->_tpl_vars['v']['a_type']; ?>
+          <td><div class="r"><div class="do-list"><a href="?act=<?php echo $this->_tpl_vars['v']['type']; ?>
 &id=<?php echo $this->_tpl_vars['v']['a_id']; ?>
 "><b class="icon-edit"></b>编辑</a>
             <a class="deleteCategory" href="?act=contentList&do=<?php echo $this->_tpl_vars['v']['a_id']; ?>
@@ -148,7 +148,7 @@ $(function(){
   });
   $(\'.deleteCategory\').click(function(){
     var _this = $(this);
-    confirm_msg("确认删除","&emsp;确定要删除该类别么？该操作将不可恢复！",function(){
+    confirm_msg("确认删除","&emsp;确定要删除该文章么？该操作将不可恢复！",function(){
       location.href=_this.attr("href");
     });
   });

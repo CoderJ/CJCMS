@@ -43,7 +43,8 @@
           </td>
           <td>{$v.cg_type_name}</td>
           <td>{$v.cg_parent_name}</td>
-          <td><div class="r"><div class="do-list"><a href="?act=category&id={$v.cg_id}"><b class="icon-edit"></b>编辑</a>
+          <td><div class="r"><div class="do-list"><a href="?act=contentList&c={$v.cg_id}"><b class="icon-edit"></b>编辑内容</a>
+            <a href="?act=category&id={$v.cg_id}"><b class="icon-edit"></b>编辑</a>
             <a class="deleteCategory" href="?act=categoryList&do={$v.cg_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>
         </tr>
         {/foreach}

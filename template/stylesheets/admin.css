@@ -90,7 +90,7 @@ fieldset .filterItem.long{ float: left; width: 440px;}
   -webkit-animation-iteration-count:infinite;
 }
 
-.imageItem{float: left; width: 200px; height:250px; overflow: hidden; text-align: center; margin:10px; padding:10px; line-height: 150%; position: relative; font-size: 14px;}
+.imageItem{float: left; width: 200px; overflow: hidden; text-align: center; margin:10px; padding:10px; line-height: 150%; position: relative; font-size: 14px;}
 .imageItem input[type="radio"]{ position: relative; top: 3px; margin-right: 3px;}
 .imageItem .closeBtn{ display: none; position: absolute; top: 0px; right:0px; width: 20px; height: 20px;}
 .imageItem{ background:#E4ECEF;}

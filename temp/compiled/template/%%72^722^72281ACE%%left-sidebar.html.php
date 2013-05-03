@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-04-29 17:36:44
+<?php /* Smarty version 2.6.25, created on 2013-05-03 13:38:31
          compiled from admin/left-sidebar.html */ ?>
 <div class="left-sidebar menu">
   <ul>

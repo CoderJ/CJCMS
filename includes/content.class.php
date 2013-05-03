@@ -34,8 +34,7 @@ class content{
         return array('article'=>'文章',
                      'page'=>'单页',
                      'album'=>'相册',
-                     'video'=>'视频',
-                     'qa'=>'问答'
+                     'video'=>'视频'
                     );
     }
     public function getArticleStatus(){
@@ -51,6 +50,13 @@ class content{
             $this->db->insert(db_pre."category",$category);
             $insert_id = $this->db->insert_id();
             if($insert_id>0){
+                if($category['cg_type'] == 'page'){
+                    $page = array('title'=>$category['cg_name'],'content'=>'&nbsp;','date'=>date('Y-m-d'),'status'=>'published','category'=>$insert_id);
+                    $addPageRes = $this->addArticle($page);
+                    if($addPageRes['code']!=1){
+                        return $addPageRes;
+                    }
+                }
                     return $res = array('code'=>1,'msg'=>'类别\''.$c['name'].'\'添加成功');
             }else{
                     return $res = array('code'=>0,'msg'=>'数据库操作失败','category'=>$category);
@@ -64,6 +70,22 @@ class content{
         if($c['name'] && $c['type']){
             $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public']);
             $this->db->update(db_pre."category",$category, 'cg_id = '.$id);
+
+            $originTypeSql = 'SELECT cg_type FROM '.db_pre.'category WHERE cg_id = "'.$id.'" ';
+            $originTypeRes = $this->db->getone($originTypeSql);
+            $originType = $res['cg_type'];
+
+            if($originType != $c['type']){
+                $delArticleArr = array('a_status'=>'trash','a_category'=>0);
+                $this->db->update(db_pre.'article',$delArticleArr,'a_category='.$id);
+                if($c['type'] == 'page'){
+                    $page = array('title'=>$category['cg_name'],'content'=>'&nbsp;','date'=>date('Y-m-d'),'status'=>'published','category'=>$id);
+                    $addPageRes = $this->addArticle($page);
+                    if($addPageRes['code']!=1){
+                        return $addPageRes;
+                    }
+                }
+            }
                 return $res = array('code'=>1,'msg'=>'类别\''.$c['name'].'\'编辑成功','category'=>$category);
 
         }else{
@@ -107,6 +129,11 @@ class content{
             }
             //$category[$k]['children'] = $this->getCategory($show,$v['cg_id'],$level+1);
 
+        }
+
+        foreach ($res as $k => $v) {
+            $level = $res[$k]['level'];
+            $res[$k]['level_s'] = ($level==$res[$k-1]['level'])?'0':(($level>$res[$k-1]['level'])?'+':'-');
         }
         return $res;
     }
@@ -178,7 +205,7 @@ class content{
         if(!$c['content']){
             return $res = array('code'=>0,'msg'=>'内容不能为空','article'=>$article);
         }
-        $article = array('a_title' => $c['title'],'a_author'=>$this->uid,'a_source' => $c['source'],'a_content'=>htmlspecialchars($c['content']),'a_date'=>$c['date'],'a_status'=>$c['status'],'a_category'=>$c['category'], a_creatTime=>date('Y-m-d H:i:s') );
+        $article = array('a_title' => $c['title'],'a_author'=>$this->uid,'a_source' => $c['source'],'a_content'=>htmlspecialchars($c['content']),'a_date'=>$c['date'],'a_status'=>$c['status'],'a_category'=>$c['category'], a_updateTime=>date('Y-m-d H:i:s') );
         $this->db->update(db_pre."article",$article,'a_id='.$id);
 
         $addImageRes = $this->addImages($c,$id);
@@ -203,7 +230,7 @@ class content{
         $this->db->query($delSql);
         $image = array();
         foreach ($c['image'] as $k => $v) {
-            $insertArr = array('i_url'=>$v,'i_article'=>$id,'i_show_as_slider'=>$c['show_as_slider'][$k],'i_show_as_cover'=>(($c['show_as_cover'] == $v)?1:0) );
+            $insertArr = array('i_url'=>$v,'i_description'=>$c['description'],'i_article'=>$id,'i_show_as_slider'=>$c['show_as_slider'][$k],'i_show_as_cover'=>(($c['show_as_cover'] == $v)?1:0) );
             array_push($image, $insertArr);
             $this->db->insert(db_pre.'image',$insertArr);
             $insert_id = $this->db->insert_id();
@@ -300,9 +327,10 @@ class content{
         $res = $this->db->getone($sql);
         $article['author_name'] = $res['user_name'];
 
-        $sql = 'SELECT cg_name FROM '.db_pre.'category WHERE cg_id = "'.$article['a_category'].'" ';
+        $sql = 'SELECT cg_name,cg_type FROM '.db_pre.'category WHERE cg_id = "'.$article['a_category'].'" ';
         $res = $this->db->getone($sql);
         $article['category_name'] = $res['cg_name'];
+        $article['type'] = $res['cg_type']?$res['cg_type']:'article';
         $status = $this->getArticleStatus();
         $article['status'] = $status[$article['a_status']];
         return $article;

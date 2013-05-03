@@ -1,22 +1,12 @@
-<?php /* Smarty version 2.6.25, created on 2013-04-29 17:09:13
+<?php /* Smarty version 2.6.25, created on 2013-05-03 15:08:50
          compiled from index.html */ ?>
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title><?php echo $this->_tpl_vars['web_action']; ?>
--<?php echo $this->_tpl_vars['web_name']; ?>
-</title>
-<link rel="stylesheet" href="template/stylesheets/base.css">
-</head>
-<body>
-  <div class="toolbar">
-    <?php if ($this->_tpl_vars['user_name']): ?>
-      <?php echo $this->_tpl_vars['user_name']; ?>
- <a href="admin">管理</a> | 退出
-    <?php else: ?>
-      <a href="/?act=login">登录</a>
-    <?php endif; ?>
-  </div>
-</body>
-</html>
+<?php $_smarty_tpl_vars = $this->_tpl_vars;
+$this->_smarty_include(array('smarty_include_tpl_file' => 'header.html', 'smarty_include_vars' => array()));
+$this->_tpl_vars = $_smarty_tpl_vars;
+unset($_smarty_tpl_vars);
+ ?>
+<?php $_smarty_tpl_vars = $this->_tpl_vars;
+$this->_smarty_include(array('smarty_include_tpl_file' => 'footer.html', 'smarty_include_vars' => array()));
+$this->_tpl_vars = $_smarty_tpl_vars;
+unset($_smarty_tpl_vars);
+ ?>

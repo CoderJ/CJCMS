@@ -1,17 +1,2 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>{$web_action}-{$web_name}</title>
-<link rel="stylesheet" href="template/stylesheets/base.css">
-</head>
-<body>
-  <div class="toolbar">
-    {if $user_name}
-      {$user_name} <a href="admin">管理</a> | 退出
-    {else}
-      <a href="/?act=login">登录</a>
-    {/if}
-  </div>
-</body>
-</html>
+{include file='header.html'}
+{include file='footer.html'}

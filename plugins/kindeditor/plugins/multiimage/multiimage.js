@@ -222,7 +222,7 @@ KindEditor.plugin('multiimage', function(K) {
 			title : self.lang(name),
 			body : html,
 			previewBtn : {
-				name : lang.insertAll,
+				name : '上传完成',
 				click : function(e) {
 					clickFn.call(self, swfupload.getUrlList());
 				}

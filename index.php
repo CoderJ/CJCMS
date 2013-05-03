@@ -34,5 +34,6 @@ switch($act){
         break;
     }
 $smarty->assign("web_action",$web_action);
+$smarty->assign("nav",$content->getCategory('public',0));
 $smarty->display($display);
 ?>

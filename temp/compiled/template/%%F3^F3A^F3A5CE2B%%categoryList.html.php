@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-03 01:20:04
+<?php /* Smarty version 2.6.25, created on 2013-05-03 14:25:12
          compiled from admin/categoryList.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -61,7 +61,9 @@ px;'></b>
 </td>
           <td><?php echo $this->_tpl_vars['v']['cg_parent_name']; ?>
 </td>
-          <td><div class="r"><div class="do-list"><a href="?act=category&id=<?php echo $this->_tpl_vars['v']['cg_id']; ?>
+          <td><div class="r"><div class="do-list"><a href="?act=contentList&c=<?php echo $this->_tpl_vars['v']['cg_id']; ?>
+"><b class="icon-edit"></b>编辑内容</a>
+            <a href="?act=category&id=<?php echo $this->_tpl_vars['v']['cg_id']; ?>
 "><b class="icon-edit"></b>编辑</a>
             <a class="deleteCategory" href="?act=categoryList&do=<?php echo $this->_tpl_vars['v']['cg_id']; ?>
 " onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>

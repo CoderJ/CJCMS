@@ -1,0 +1,120 @@
+{include file='admin/header.html'}
+<div class="container">
+  {if $msg}
+  <div class="msg msg_{$msg.type}">
+    {$msg.msg}
+  </div>
+  {/if}
+
+  <form id="addArticle" method='post'>
+    <fieldset>
+      <legend>{$web_action}</legend>
+      <label for="addArticleTitle">视频标题: </label>
+      <input id="addArticleTitle" class="title" type="text" name="title" checkVal="notnull" value="{if $article}{$article.a_title}{/if}" /><br />
+      <label for="addArticleCategory">所属类别: </label>
+      <select id="addArticleCategory" name="category" checkVal="notNull">
+        <option value="0">无</option>
+        {foreach from=$allCategory key=k item=v}
+        <option value="{$v.cg_id}" {if $article.a_category eq $v.cg_id}selected="selected"{/if}>{$v.cg_name}</option>
+        {/foreach}
+      </select><br />
+      <label for="addArticleStatus">是否发布: </label>
+      <select id="addArticleStatus" name="status" class="switch">
+        <option value="locked" {if $article.a_status == 'locked'}selected="selected"{/if}>否</option>
+        <option value="published" {if $categoryInfo.cg_public == 'published' || $categoryInfo.cg_public != 'locked'}selected="selected"{/if}>是</option>
+      </select>
+      <br />
+      <label for="addArticleDate">发布时间: </label>
+      <input id="addArticleDate" type="text" name="date" value="{if $article}{$article.a_date}{/if}" /><br />
+      <label for="addArticleContent">视频描述: </label>
+      <textarea id="addArticleContent" name="content" class="article" style="width:500px; height:200px;" checkVal="notnull">
+        {if $article}{$article.a_content}{/if}
+      </textarea>
+    </fieldset>
+    <fieldset>
+      <legend>视频</legend>
+      <label>URL:</label>
+      <input class="ke-input-text" type="text" id="uploadFileUrl" name="file[]" value="http://" /> 
+      <input class="ke-input-text" type="hidden" id="uploadFileName" name="filename[]" value="" /> 
+      <input class="ke-input-text" type="hidden" name="show_as_list[]" value="1" /> 
+      <input type="button" id="uploadFileButton" value="上传" /><span class="uploadFileLoading">上传中。。。</span>      
+
+      <div class="fileMag">
+        {foreach from=$article.file key=k item=v}
+          <div class="fileItem">
+            <span class="fileName">{$v.f_name}</span>
+            <input type="hidden" value="{$v.f_url}" name="file[]">
+            <input type="hidden" value="{$v.f_name}" name="filename[]"> 
+            单独显示:
+            <select class="switch ui-toggle-switch" name="show_as_list[]">
+              <option value="0" {if $v.f_show_as_list == 0}selected="selected"{/if}>否</option>
+              <option value="1" {if $v.f_show_as_list == 1 || $v.f_show_as_list != 0}selected="selected"{/if}>是</option>
+          </select>
+          </div>        
+       {/foreach}
+      </div>
+    </fieldset>
+    <fieldset class="submit">
+      <input type="button" id="pageReset" value="取消" />
+      <input type="button" id="pageSubmit" value="提交" />
+    </fieldset>
+  </form>
+</div>
+{include file='admin/footer.html'}
+{literal}
+<script charset="utf-8" src="/plugins/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/plugins/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+$(function(){
+  $('#addArticleDate').datepicker({
+    autoSize: true,
+    dateFormat: "yy-mm-dd"
+  });
+  if($('#addArticleDate').val()==""){
+    var myDate = new Date();
+    $("#addArticleDate").val(myDate.getFullYear()+'-'+((myDate.getMonth()+1)>9?(myDate.getMonth()+1):'0'+(myDate.getMonth()+1))+'-'+(myDate.getDate()>9?myDate.getDate():'0'+myDate.getDate()));
+  }
+  $('.fileItem,.imageItem').each(function(){
+    $(this).addCloseBtn();
+  })
+  var editor;
+KindEditor.ready(function(K) {
+    editor = K.create('textarea[name="content"]', {
+      resizeType : 0,
+      allowPreviewEmoticons : false,
+      allowImageUpload : false,
+      afterBlur:function(){this.sync()},
+      items : [
+        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist', '|', 'emoticons']
+    });
+  var uploadFileButton = K.uploadbutton({
+    button : K('#uploadFileButton'),
+    fieldName : 'imgFile',
+    url : '../ajax/upload.php?dir=media',
+    afterUpload : function(data) {
+      $('.uploadFileLoading').hide();
+      if (data.error === 0) {
+        var url = K.formatUrl(data.url, 'absolute');
+        K('#uploadFileUrl').val(url);
+        K('#uploadFileName').val(data.name);
+      } else {
+        alert(data.message);
+      }
+    },
+    afterError : function(str) {
+      alert(str);
+    }
+  });
+  uploadFileButton.fileBox.change(function(e) {
+    $('.uploadFileLoading').show();
+    uploadFileButton.submit();
+  });
+});
+  $('#pageSubmit').click(function(){
+    checkForm($('#addArticle'));
+  });
+})
+</script>
+{/literal}
