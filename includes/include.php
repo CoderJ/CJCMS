@@ -13,7 +13,7 @@ if (!defined('IN_CJ'))
     die('网站异常！');
 
 }
-error_reporting(1);
+error_reporting(2000);
 session_start();
 
 if (__FILE__ == '')
@@ -24,7 +24,6 @@ define('ROOT_PATH', str_replace('includes/include.php', '', str_replace('\\', '/
 
 include_once (ROOT_PATH.'includes/config.php');
 include_once (ROOT_PATH.'includes/db.class.php');
-include_once (ROOT_PATH.'includes/browser.class.php');
 include_once (ROOT_PATH.'includes/basic.class.php');
 include_once (ROOT_PATH.'includes/user.class.php');
 include_once (ROOT_PATH.'includes/admin.class.php');

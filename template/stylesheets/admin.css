@@ -29,7 +29,7 @@ form fieldset label{width: 100px; text-align: right; display: inline-block; font
 form fieldset .ui-toggle-switch label {padding:0; line-height: 45px;}
 form fieldset input[type='text'],form fieldset input[type='password']{ border: 1px solid #C9C9C9; border-width: 0px 0px 1px; font-size: 14px; width: 200px; height: 24px; line-height: 24px; background: none; color: #333;}
 form fieldset input[type='text'].title{width:400px;}
-form fieldset textarea.article{width:100%; height: 500px;}
+form fieldset textarea.article{width:100%; height: 500px; font-size: 14px;}
 form fieldset input[type='text'].input-red{ border-color:#F00; color:#F00;}
 .select { display: inline-block; width: 200px; height: 29px; position: relative;}
 .select b.icon-downlist{position: absolute; bottom: 0px; right: 0px; border-color:transparent #B2B2B2 #B2B2B2 transparent; border-style: dashed solid solid dashed; border-width: 5px; height: 0; overflow: hidden; position: absolute; width: 0;}

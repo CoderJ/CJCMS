@@ -11,8 +11,8 @@
       <legend>{$web_action}</legend>
       <label for="addCategoryName">类别名称: </label>
       <input id="addCategoryName" type="text" name="name" checkVal="notnull" value="{if $categoryInfo}{$categoryInfo.cg_name}{/if}" /><br />
-      <label for="addCategoryParent">类别类型: </label>
-      <select id="addCategoryParent" name="type" checkVal="notNull">
+      <label for="addCategoryType">类别类型: </label>
+      <select id="addCategoryType" name="type" checkVal="notNull">
         {foreach from=$categoryType key=k item=v}
           <option value="{$k}" {if $categoryInfo.cg_type eq $k}selected="selected"{/if}>{$v}</option>
         {/foreach}
@@ -24,10 +24,17 @@
         <option value="{$v.cg_id}" {if $categoryInfo.cg_parent eq $v.cg_id}selected="selected"{/if}>{$v.cg_name}</option>
         {/foreach}
       </select><br />
-      <label for="addCategoryParent">是否发布: </label>
-      <select id="addCategoryParent" name="public" class="switch">
+      <label for="addCategoryPublic">是否发布: </label>
+      <select id="addCategoryPublic" name="public" class="switch">
         <option value="0" {if $categoryInfo.cg_public == 0}selected="selected"{/if}>否</option>
         <option value="1" {if $categoryInfo.cg_public eq 1 || $categoryInfo.cg_public != 0}selected="selected"{/if}>是</option>
+      </select>
+      <br />
+      <label for="addCategoryShow">显示方式: </label>
+      <select id="addCategoryShow" name="show">
+        <option value="1" {if $categoryInfo.cg_show == 1}selected="selected"{/if}>只显示本类别内容</option>
+        <option value="0" {if $categoryInfo.cg_show == 0}selected="selected"{/if}>直接跳转到子类别</option>
+        <option value="2" {if $categoryInfo.cg_show == 2}selected="selected"{/if}>显示本类别及其子类的内容</option>
       </select>
       <br />
     </fieldset>

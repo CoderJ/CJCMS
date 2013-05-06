@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-03 14:25:16
+<?php /* Smarty version 2.6.25, created on 2013-05-04 20:27:10
          compiled from admin/category.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -21,8 +21,8 @@ unset($_smarty_tpl_vars);
       <label for="addCategoryName">类别名称: </label>
       <input id="addCategoryName" type="text" name="name" checkVal="notnull" value="<?php if ($this->_tpl_vars['categoryInfo']): ?><?php echo $this->_tpl_vars['categoryInfo']['cg_name']; ?>
 <?php endif; ?>" /><br />
-      <label for="addCategoryParent">类别类型: </label>
-      <select id="addCategoryParent" name="type" checkVal="notNull">
+      <label for="addCategoryType">类别类型: </label>
+      <select id="addCategoryType" name="type" checkVal="notNull">
         <?php $_from = $this->_tpl_vars['categoryType']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['k'] => $this->_tpl_vars['v']):
 ?>
@@ -42,10 +42,17 @@ unset($_smarty_tpl_vars);
 </option>
         <?php endforeach; endif; unset($_from); ?>
       </select><br />
-      <label for="addCategoryParent">是否发布: </label>
-      <select id="addCategoryParent" name="public" class="switch">
+      <label for="addCategoryPublic">是否发布: </label>
+      <select id="addCategoryPublic" name="public" class="switch">
         <option value="0" <?php if ($this->_tpl_vars['categoryInfo']['cg_public'] == 0): ?>selected="selected"<?php endif; ?>>否</option>
         <option value="1" <?php if ($this->_tpl_vars['categoryInfo']['cg_public'] == 1 || $this->_tpl_vars['categoryInfo']['cg_public'] != 0): ?>selected="selected"<?php endif; ?>>是</option>
+      </select>
+      <br />
+      <label for="addCategoryShow">显示方式: </label>
+      <select id="addCategoryShow" name="show">
+        <option value="1" <?php if ($this->_tpl_vars['categoryInfo']['cg_show'] == 1): ?>selected="selected"<?php endif; ?>>只显示本类别内容</option>
+        <option value="0" <?php if ($this->_tpl_vars['categoryInfo']['cg_show'] == 0): ?>selected="selected"<?php endif; ?>>直接跳转到子类别</option>
+        <option value="2" <?php if ($this->_tpl_vars['categoryInfo']['cg_show'] == 2): ?>selected="selected"<?php endif; ?>>显示本类别及其子类的内容</option>
       </select>
       <br />
     </fieldset>

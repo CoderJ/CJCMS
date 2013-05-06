@@ -17,7 +17,11 @@
   }else{
     if($id = $basic->get("id","num")){
       $web_action = '编辑文章';
-      $smarty->assign('article',$content->getArticle($id));
+      $article = $content->getArticle($id);
+      if(!$article){
+        header('Location: /admin/');
+      }
+      $smarty->assign('article',$article);
     }
   }
   $smarty->assign('allCategory',$content->getAllCategory('all','article'));

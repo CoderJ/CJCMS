@@ -1,2 +1,13 @@
 {include file='header.html'}
+<div class="container">
+  <div class="left-side">
+    {include file='shared/side-nav.tpl'}
+  </div>
+  <div class="article has-left-side has-right-side">
+    {$page.a_content}
+  </div>
+  <div class="right-side">
+    {include file='shared/side-nav.tpl'}
+  </div>
+</div>
 {include file='footer.html'}

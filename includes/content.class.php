@@ -46,7 +46,7 @@ class content{
     }
     public function addCategory($c){
         if($c['name'] && $c['type']){
-            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public']);
+            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public'],'cg_show'=>$c['show']);
             $this->db->insert(db_pre."category",$category);
             $insert_id = $this->db->insert_id();
             if($insert_id>0){
@@ -68,7 +68,7 @@ class content{
     }
     public function updateCategory($c,$id){
         if($c['name'] && $c['type']){
-            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public']);
+            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public'],'cg_show'=>$c['show']);
             $this->db->update(db_pre."category",$category, 'cg_id = '.$id);
 
             $originTypeSql = 'SELECT cg_type FROM '.db_pre.'category WHERE cg_id = "'.$id.'" ';
@@ -205,7 +205,7 @@ class content{
         if(!$c['content']){
             return $res = array('code'=>0,'msg'=>'内容不能为空','article'=>$article);
         }
-        $article = array('a_title' => $c['title'],'a_author'=>$this->uid,'a_source' => $c['source'],'a_content'=>htmlspecialchars($c['content']),'a_date'=>$c['date'],'a_status'=>$c['status'],'a_category'=>$c['category'], a_updateTime=>date('Y-m-d H:i:s') );
+        $article = array('a_title' => $c['title'],'a_author'=>$this->uid,'a_source' => $c['source'],'a_content'=>htmlspecialchars($c['content']),'a_date'=>$c['date']?$c['date']:date('Y-m-d'),'a_status'=>$c['status'],'a_category'=>$c['category'], a_updateTime=>date('Y-m-d H:i:s') );
         $this->db->update(db_pre."article",$article,'a_id='.$id);
 
         $addImageRes = $this->addImages($c,$id);
@@ -262,10 +262,11 @@ class content{
         $sql = 'SELECT * FROM '.db_pre.'article WHERE a_id = "'.$id.'"; ';
         $res = $this->db->getone($sql);
         if(!$res){
-            header('Location: /admin/');
+            return Null;
         }
         $res['image'] = $this->getImages($id);
         $res['file'] = $this->getFiles($id);
+        $res['a_content'] = htmlspecialchars_decode($res['a_content']);
         return $res;
     }
 
@@ -291,7 +292,7 @@ class content{
 
         return $res;
     }
-    function getArticleParam($type,$category,$status,$keyword){
+    function getArticleParam($type,$category,$status,$keyword,$hasChlidren){
         $param = '';
         if($type){
             $sql = 'SELECT cg_id FROM '.db_pre.'category WHERE cg_type = "'.$type.'" ';
@@ -305,7 +306,16 @@ class content{
         }
 
         if($category){
-            $param .= 'AND a_category = "'.$category.'" ';
+            if(!$hasChlidren){
+                $param .= 'AND a_category = "'.$category.'" ';
+            }else{
+                $children = $this->getCategory($status,$category,0,$type);
+                $categorys = $category;
+                foreach ($children as $key => $value) {
+                    $categorys .= ', '.$value['cg_id'];
+                }
+                $param .= 'AND a_category IN ('.$categorys.') ';
+            }
         }
         if($status){
             $param .= 'AND a_status = "'.$status.'" ';
@@ -316,8 +326,7 @@ class content{
             $param .= 'AND a_title LIKE "%'.$keyword.'%" ';
         }
 
-        $param = 'WHERE '.substr($param, 3).' ORDER BY a_creatTime DESC';
-
+        $param = 'WHERE '.substr($param, 3).' ORDER BY a_date DESC,a_creatTime DESC ';
         return $param;
 
     }
@@ -336,8 +345,8 @@ class content{
         return $article;
     }
 
-    public function getArticles($page,$type,$category,$status,$keyword){
-        $sql = 'SELECT * FROM '.db_pre.'article '.$this->getArticleParam($type,$category,$status,$keyword);
+    public function getArticles($page,$type,$category,$status,$keyword,$hasChlidren){
+        $sql = 'SELECT * FROM '.db_pre.'article '.$this->getArticleParam($type,$category,$status,$keyword,$hasChlidren);
         if(!$page){
             $page = 1;
         }
@@ -351,8 +360,8 @@ class content{
         return $res;
     }
 
-    public function getArticlesCount($page,$type,$category,$status,$keyword){
-        $sql = 'SELECT count(*) as nums FROM '.db_pre.'article '.$this->getArticleParam($type,$category,$status,$keyword);
+    public function getArticlesCount($page,$type,$category,$status,$keyword,$hasChlidren){
+        $sql = 'SELECT count(*) as nums FROM '.db_pre.'article '.$this->getArticleParam($type,$category,$status,$keyword,$hasChlidren);
         $res = $this->db->getone($sql);
         $totalNum = $res['nums']?$res['nums']:0;
         $totalPage = ceil($totalNum/20);
@@ -373,6 +382,13 @@ class content{
             $this->db->update(db_pre.'article',$updateArr,'a_id='.$id);
             return $res = array('code'=>1,'msg'=>'文章已被移入回收站');
         }
+    }
+
+    public function getPage($cg_id){
+        $sql = 'SELECT * FROM '.db_pre.'article WHERE a_category = '.$cg_id.' AND a_status = "published" ORDER BY a_updateTime DESC  LIMIT 0,1';
+        $res = $this->db->getone($sql);
+        $res['a_content'] = htmlspecialchars_decode($res['a_content']);
+        return $res;
     }
 }
 

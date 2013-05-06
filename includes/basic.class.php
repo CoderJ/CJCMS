@@ -11,7 +11,7 @@ class basic
 	public function get($var, $type)
 	{
 		$error = 0;
-		$var = $_GET[$var];
+		$var = (isset($_GET[$var]))?$_GET[$var]:Null;
 		switch($type) {
 			case 'num':
 				if(empty($var) or !is_numeric($var) or ($var < 0)) {

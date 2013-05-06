@@ -11,17 +11,8 @@
 </head>
 <body>
 <div class="header">
-  <div class="nav">
-    <ul>
-      {foreach from=$nav key=k item=v}
-      {if $nav[$k].level_s == '0'}
-        </li><li><a>{$v.cg_name}</a>
-      {elseif $nav[$k].level_s == '+'}
-        <ul></li><li><a>{$v.cg_name}</a>
-      {elseif $nav[$k].level_s == '-'}
-        </li></ul><li><a>{$v.cg_name}</a>
-      {/if}
-      {/foreach}
-    </ul>
-  </div>
+  <a class="cqupt" href='http://www.cqupt.edu.cn' target='_blank'><img src="/images/cqupt.png" /></a>
+  {include file='shared/nav.tpl'}
+  <div class="c"></div>
+  <a class="logo" href='/'>微电子学</a>
 </div>

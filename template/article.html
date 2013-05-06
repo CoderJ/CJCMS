@@ -1,0 +1,21 @@
+{include file='header.html'}
+<div class="container">
+  <div class="fl clearfix">
+    <div class="left-side">
+      {include file='shared/side-nav.tpl'}
+    </div>
+    <div class="article has-left-side has-right-side">
+      {if $articles}
+        {include file='shared/article-list.tpl'}
+      {/if}
+      {if $article}
+        {include file='shared/article-content.tpl'}
+      {/if}
+    </div>
+    <div class="right-side clearfix">
+    </div>
+    <div class="c"></div>
+  </div>
+  <div class="c"></div>
+</div>
+{include file='footer.html'}

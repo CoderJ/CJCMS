@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-03 13:44:31
+<?php /* Smarty version 2.6.25, created on 2013-05-04 20:57:21
          compiled from admin/contentList.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -57,7 +57,7 @@ unset($_smarty_tpl_vars);
       </div>
       <div class="filterItem long">
         <label for="articleStatus">搜索: </label>
-        <input id="articleSearchInput" type="text" name="k" checkVal="notnull" value="<?php if ($this->_tpl_vars['keyword']): ?><?php echo $this->_tpl_vars['keyword']; ?>
+        <input id="articleSearchInput" type="text" name="k" value="<?php if ($this->_tpl_vars['keyword']): ?><?php echo $this->_tpl_vars['keyword']; ?>
 <?php endif; ?>" /> 
         <input type="button" id="articleSearch" value="搜索" />
       </div>

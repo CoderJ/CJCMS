@@ -55,5 +55,5 @@
   $smarty->assign('page', $page);
   $smarty->assign("articles",$content->getArticles($page,$type,$category,$status,$keyword));
   $count = $content->getArticlesCount($page,$type,$category,$status,$keyword);
-  $smarty->assign('pagenav',array('count'=>$count['count'],page=>$count['page'],nowpage=>$page,basehref=>'/admin/?act=contentList&type='.$type.'&c='.$category.'$s='.$status.'&k='.$keyword.'&p='));
+  $smarty->assign('pagenav',array('count'=>$count['count'],page=>$count['page'],nowpage=>$page,basehref=>'/admin/?act=contentList&type='.$type.'&c='.$category.'&s='.$status.'&k='.$keyword.'&p='));
 ?>
