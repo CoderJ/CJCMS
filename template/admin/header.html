@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <title>{$web_action}-{$web_name}</title>
-  <link rel="stylesheet" href="/template/stylesheets/normalise.css">
-  <link rel="stylesheet" href="/template/stylesheets/jquery-ui.css">
-  <link rel="stylesheet" href="/template/stylesheets/base.css">
-  <link rel="stylesheet" href="/template/stylesheets/admin.css">
-  <script src="/template/javascripts/modernizr-2.0.6.min.js"></script>
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/normalise.css">
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/jquery-ui.css">
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/base.css">
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/admin.css">
+  <script src="{$ROOT_PATH}/template/javascripts/modernizr-2.0.6.min.js"></script>
 </head>
 <body>
 {if $user_name}
   <div class="toolbar">
     <h2>{$web_action}</h2>
-      {$user_name} | <a href="/?act=logout">退出</a>
+      {$user_name} | <a href="?act=logout">退出</a>
   </div>
   {include file='admin/left-sidebar.html'}
 {/if}

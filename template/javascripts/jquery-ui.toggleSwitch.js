@@ -54,7 +54,7 @@ jQuery.fn.toggleSwitch = function (params) {
 
         function toggleValue(slideContain, index) {
             $(slideContain).find("label").eq(index).addClass("ui-state-active").siblings("label").removeClass("ui-state-active");
-            $(slideContain).parent().find("option").eq(index).attr("selected", true);
+            $(slideContain).prev('select').find("option").eq(index).attr("selected", true);
             $(slideContain).find(".ui-slider").slider("value", index * 100);
         }
 

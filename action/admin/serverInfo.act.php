@@ -1,4 +1,4 @@
-﻿<?php
+<?php
   $web_action = "服务信息";
   $serverInfo = array(
     '系统类型及版本号：'  =>       php_uname(),

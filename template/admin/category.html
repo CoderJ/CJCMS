@@ -32,9 +32,22 @@
       <br />
       <label for="addCategoryShow">显示方式: </label>
       <select id="addCategoryShow" name="show">
-        <option value="1" {if $categoryInfo.cg_show == 1}selected="selected"{/if}>只显示本类别内容</option>
+        <option value="1" {if $categoryInfo.cg_show != 0 && $categoryInfo.cg_show != 2}selected="selected"{/if}>只显示本类别内容</option>
         <option value="0" {if $categoryInfo.cg_show == 0}selected="selected"{/if}>直接跳转到子类别</option>
         <option value="2" {if $categoryInfo.cg_show == 2}selected="selected"{/if}>显示本类别及其子类的内容</option>
+      </select>
+      <br />   
+      <label for="addCategoryShowInNav">在导航中显示: </label>
+      <select id="addCategoryShowInNav" name="show_in_nav" class="switch">
+        <option value="0" {if $categoryInfo.cg_public == 0}selected="selected"{/if}>否</option>
+        <option value="1" {if $categoryInfo.cg_public eq 1 || $categoryInfo.cg_public != 0}selected="selected"{/if}>是</option>
+      </select>
+      <br />
+      <label for="addCategoryNav">导航位置: </label>
+      <select id="addCategoryNav" name="nav">
+        <option value="0" {if $categoryInfo.cg_nav == 0}selected="selected"{/if}>主导航</option>
+        <option value="1" {if $categoryInfo.cg_nav == 1}selected="selected"{/if}>次导航</option>
+        <option value="2" {if $categoryInfo.cg_nav == 2}selected="selected"{/if}>底部导航</option>
       </select>
       <br />
     </fieldset>

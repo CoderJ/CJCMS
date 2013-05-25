@@ -1,0 +1,242 @@
+{include file='admin/header.html'}
+<div class="container index-config">
+  {if $msg}
+  <div class="msg msg_{$msg.type}">
+    {$msg.msg}
+  </div>
+  {/if}
+  <fieldset>
+    <legend>待选类别</legend>
+    {foreach from=$category key=k item=v}
+    <span class="item" cid="{$v.cg_id}" ctype="{$v.cg_type}">{$v.cg_name}</span>
+    {/foreach}    
+  </fieldset>
+  <fieldset>
+    <legend>效果预览</legend>
+    <div id="previous" class="previous">
+    {foreach from=$indexConfig key=k item=v}
+      {foreach from=$category key=key item=val}
+        {if $v.ic_category == $val.cg_id}
+      <div ctype="{$val.cg_type}" cid="{$val.cg_id}" class="previousItem previous-item previous-{$val.cg_type}" cstyle="{$v.ic_model}" cwidth="{$v.ic_width}" cheight="{$v.ic_height}">
+        <div class="title">{$val.cg_name}</div>
+        <div class="styleRes"></div>
+      </div>
+        {/if}
+      {/foreach}    
+    {/foreach}    
+      <div class="c"></div>
+    </div>
+  </fieldset>
+  <fieldset class="submit">
+    <input type="button" id="configReset" value="取消" />
+    <input type="button" id="configSubmit" value="提交" />
+  </fieldset>
+<div style="display:none;">
+  <form method="post" id="configForm">
+  </form>
+  <fieldset class="config">
+    <label for="styleSel">样式选择</label>
+    <select id="styleSel">
+      <option value="1" selected="selected">单页样式一</option>
+      <option value="2">单页样式二</option>
+      <option value="3">单页样式三</option>
+    </select>
+    <br />
+    <label for="widthSel">宽度</label>
+    <select id="widthSel">
+      <option value="1" selected="selected">正常</option>
+      <option value="2">双倍</option>
+      <option value="3">三倍</option>
+    </select>
+    <br />    
+    <label for="heightSel">高度</label>
+    <select id="heightSel">
+      <option value="1" selected="selected">正常</option>
+      <option value="2">一半</option>
+    </select>
+    <br />
+    <!--<label for="colorSel">颜色</label>
+    <select id="colorSel">
+      <option value="normal" selected="selected">默认</option>
+      <option value="yellow">黄色</option>
+      <option value="blue">蓝色</option>
+      <option value="green">绿色</option>
+      <option value="red">红色</option>
+      <option value="purple">紫色</option>
+      <option value="gray">灰色</option>
+    </select>
+    <br /> -->
+  </fieldset>
+</div>
+</div>
+
+{include file='admin/footer.html'}
+{literal}
+<script type="text/javascript">
+$(function(){
+  $('.previousItem').each(function(){
+    var _this = $(this);
+    var styleRes = '样式';
+    switch(_this.attr('ctype')){
+      case 'page':
+        styleRes = '单页'+styleRes;
+        break;
+      case 'article':
+        styleRes = '文章'+styleRes;
+        break;
+      default:
+        styleRes = _this.attr('ctype')+styleRes;
+    }
+    switch(_this.attr('cstyle')){
+      case '1':
+        styleRes = styleRes+'一';
+        break;
+      case '2':
+        styleRes = styleRes+'二';
+        break;
+      case '3':
+        styleRes = styleRes+'三';
+        break;
+      default:
+        styleRes = styleRes+$(this).attr('val');
+    }
+    _this.find('.styleRes').text(styleRes);  
+    switch(_this.attr('cwidth')){
+      case '1':
+        _this.removeClass('double-width').removeClass('three-width');
+        break;
+      case '2':
+        _this.addClass('double-width').removeClass('three-width');
+        break;
+      case '3':
+        _this.removeClass('double-width').addClass('three-width');
+        break;
+    }
+    switch(_this.attr('cheight')){
+      case '1':
+        _this.removeClass('half-height');
+        break;
+      case '2':
+        _this.addClass('half-height');
+        break;
+    }
+ });
+var addConigDialog = function(){
+  $('.previousItem').unbind('hover').hover(function(){
+      var config = $('<div class="item-config"><div class="closeBtn"><b class="closeBtnTop"></b><b class="closeBtnRight"></b><b class="closeBtnBottom"></b><b class="closeBtnLeft"></b></div><div class="configBtn">编辑</div></div>');
+      $(this).append(config);
+      $('.configBtn').unbind('click').click(function(){
+        var _this = $(this).closest('.previousItem');
+        var content = $('.config');
+         var dialog = content.dialog({title:$(this).find('.title').text()+'界面配置',top:200,width:500,buttons: [
+          {
+            text: "完成",
+            click: function() { $(this).dialog("close");$(this).dialog("destroy");}
+          }
+        ],beforeClose: function(event,ui) {
+          _this.after(_this.clone(true));
+          _this.remove();
+        }});
+        $('#styleSel').next('input').next('b').next('ul').find('li').click(function(){
+          _this.attr('cstyle',$(this).attr('val'));
+          var styleRes = '样式';
+          switch(_this.attr('ctype')){
+            case 'page':
+              styleRes = '单页'+styleRes;
+              break;
+            case 'article':
+              styleRes = '文章'+styleRes;
+              break;
+            default:
+              styleRes = _this.attr('ctype')+styleRes;
+          }
+          switch($(this).attr('val')){
+            case '1':
+              styleRes = styleRes+'一';
+              break;
+            case '2':
+              styleRes = styleRes+'二';
+              break;
+            case '3':
+              styleRes = styleRes+'三';
+              break;
+            default:
+              styleRes = styleRes+$(this).attr('val');
+          }
+          _this.find('.styleRes').text(styleRes);
+        });
+        $('#widthSel').next('input').next('b').next('ul').find('li').click(function(){
+          _this.attr('cwidth',$(this).attr('val'));
+          switch($(this).attr('val')){
+            case '1':
+              _this.removeClass('double-width').removeClass('three-width');
+              break;
+            case '2':
+              _this.addClass('double-width').removeClass('three-width');
+              break;
+            case '3':
+              _this.removeClass('double-width').addClass('three-width');
+              break;
+          }
+        });
+        $('#heightSel').next('input').next('b').next('ul').find('li').click(function(){
+          _this.attr('cheight',$(this).attr('val'));
+          switch($(this).attr('val')){
+            case '1':
+              _this.removeClass('half-height');
+              break;
+            case '2':
+              _this.addClass('half-height');
+              break;
+          }
+        });
+      }); 
+      $('.previousItem .closeBtn').unbind('click').click(function(){
+        $(this).closest('.previousItem').remove();
+      }); 
+    },function(){
+      $(this).find('.item-config').remove();
+    });
+
+}
+addConigDialog();
+  $('.item').click(function(){
+    var styleRes = '样式一';
+    switch($(this).attr('ctype')){
+      case 'page':
+        styleRes = '单页'+styleRes;
+        break;
+      case 'article':
+        styleRes = '文章'+styleRes;
+        break;
+      default:
+        styleRes = _this.attr('ctype')+styleRes;
+    }
+    $('#previous').prepend('<div class="previousItem previous-item previous-'+$(this).attr('ctype')+'" cid="'+$(this).attr('cid')+'" ctype="'+$(this).attr('ctype')+'"><div class="title">'+$(this).text()+'</div><div class="styleRes">'+styleRes+'</div></div>');
+    addConigDialog();
+ 
+  });
+  $('#configReset').click(function(){
+    $('#previous').empty();
+  });
+  $('#configSubmit').click(function(){
+    $('#configForm').empty();
+
+    $('#previous').find('.previousItem').each(function(){
+      var _this = $(this);
+      var ctype = _this.attr('ctype');
+      var cid = _this.attr('cid');
+      var cstyle = _this.attr('cstyle')?_this.attr('cstyle'):1;
+      var cwidth = _this.attr('cwidth')?_this.attr('cwidth'):1;
+      var cheight = _this.attr('cheight')?_this.attr('cheight'):1;
+      $('#configForm').append('<input type="hidden" name="id[]" value="'+cid+'">');
+      $('#configForm').append('<input type="hidden" name="type[]" value="'+ctype+'">');
+      $('#configForm').append('<input type="hidden" name="style[]" value="'+cstyle+'">');
+      $('#configForm').append('<input type="hidden" name="width[]" value="'+cwidth+'">');
+      $('#configForm').append('<input type="hidden" name="height[]" value="'+cheight+'">');
+    });
+    $('#configForm').submit();
+  });
+});
+</script>
+{/literal}

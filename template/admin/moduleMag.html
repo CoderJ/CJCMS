@@ -22,13 +22,13 @@
     {foreach from=$menu key=k item=v}
     <tr>
       <td><div class="r"><b class="icon-right"></b><input type="hidden" name="id[]" value="{$v.md_id}" /></div></td><td><input type="text" name="key[]" value="{$v.md_key}" checkVal="notnull" /></td><td><input name="name[]" type="text" value="{$v.md_name}" checkVal="notnull" /></td><td class="order"><input name="order[]" type="text" value="{$v.md_order}" class="order" checkVal="number" /></td>        
-      <td><div class="r"><div class="do-list"><a class="deleteModule" href="/admin/?act=moduleMag&do={$v.md_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>
+      <td><div class="r"><div class="do-list"><a class="deleteModule" href="?act=moduleMag&do={$v.md_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>
     </tr>
       {if $v.children}
         {foreach from=$v.children key=ck item=cv}
         <tr>
       <td><div class="r"><b class="icon-up"></b><input type="hidden" name="id[]" value="{$cv.md_id}" /></div></td><td><input name="key[]" type="text" value="{$cv.md_key}" checkVal="notnull" /></td><td><input name="name[]" type="text" value="{$cv.md_name}" checkVal="notnull" /></td><td class="order"><input name="order[]" type="text" value="{$cv.md_order}" checkVal="number" /></td>        
-      <td><div class="r"><div class="do-list"><a class="deleteModule"  href="/admin/?act=moduleMag&do={$cv.md_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td><td></td>
+      <td><div class="r"><div class="do-list"><a class="deleteModule"  href="?act=moduleMag&do={$cv.md_id}" onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td><td></td>
         </tr>
         {/foreach}
       {/if}

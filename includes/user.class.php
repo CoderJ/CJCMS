@@ -24,10 +24,10 @@ class user{
                 $this->db->query($sql);
                 echo $type;
                 if($type == 'admin'){
-                    header('Location: /admin/');
+                    header('Location: '.path_pre.'/admin/');
                 }else{
                     if(!$_SESSION['url']){
-                        header('Location: /');
+                        header('Location: '.path_pre.'/');
                     }else{
                         header('Location: '.$_SESSION['url']);
                     }
@@ -48,7 +48,7 @@ class user{
         if($insert_id){
                  $_SESSION['user']['user_id'] = $insert_id;                
                  $_SESSION['user']['user_name'] = $name;
-                 header("Location: /");
+                 header("Location: ".path_pre."/");
         }else{
           return "0";  
         }
@@ -58,7 +58,7 @@ class user{
         if($_SESSION['url']){
             header("Location: ".$_SESSION['url']);
         }else{
-            header("Location: /");
+            header("Location: ".path_pre."/");
         }
 	} 
     public function pwd($pwd){

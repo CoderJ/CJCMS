@@ -1,13 +1,14 @@
 {include file='header.html'}
+{include file='shared/slider.tpl'}
 <div class="container">
-  <div class="left-side">
-    {include file='shared/side-nav.tpl'}
-  </div>
-  <div class="article has-left-side has-right-side">
-    {$page.a_content}
-  </div>
-  <div class="right-side">
-    {include file='shared/side-nav.tpl'}
-  </div>
+  {foreach from=$index key=k item=v}
+    <div class="index-module{if $v.ic_width == 2} double-width{/if}{if $v.ic_width == 3} three-width{/if}{if $v.ic_height == 2} half-height{/if} {$v.categoryInfo.cg_type}-module">
+      <div class="module-title"><a href="?act={$v.categoryInfo.cg_type}&c={$v.categoryInfo.cg_id}">{$v.categoryInfo.cg_name}</a></div>
+      <div class="c"></div>
+      {include file="shared/index-module-`$v.categoryInfo.cg_type`-`$v.ic_model`.tpl"}
+    </div>
+  {/foreach}
+      {include file="shared/index-model-custom.tpl"}
+  <div class="c"></div>
 </div>
 {include file='footer.html'}

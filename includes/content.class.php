@@ -46,7 +46,7 @@ class content{
     }
     public function addCategory($c){
         if($c['name'] && $c['type']){
-            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public'],'cg_show'=>$c['show']);
+            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public'],'cg_show'=>$c['show'], 'cg_show_in_nav'=>$c['show_in_nav'],'cg_nav'=>$c['nav']);
             $this->db->insert(db_pre."category",$category);
             $insert_id = $this->db->insert_id();
             if($insert_id>0){
@@ -68,7 +68,7 @@ class content{
     }
     public function updateCategory($c,$id){
         if($c['name'] && $c['type']){
-            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public'],'cg_show'=>$c['show']);
+            $category = array('cg_name'=>$c['name'],'cg_type'=>$c['type'],'cg_parent'=>($c['parent']?$c['parent']:0),'cg_public'=>$c['public'],'cg_show'=>$c['show'],'cg_show_in_nav'=>$c['show_in_nav'],'cg_nav'=>$c['nav']);
             $this->db->update(db_pre."category",$category, 'cg_id = '.$id);
 
             $originTypeSql = 'SELECT cg_type FROM '.db_pre.'category WHERE cg_id = "'.$id.'" ';
@@ -161,7 +161,7 @@ class content{
         $CategoryInfoSql = 'SELECT user_group FROM '.db_pre.'user WHERE user_id = "'.$id.'";';
         $CategoryInfo = $this->db->getone($CategoryInfoSql);
         if(!$CategoryInfo['cg_id']){
-            header('Location: /admin/?act=categoryList');
+            header('Location: '.path_pre.'/admin/?act=categoryList');
         }
         $delSql = 'DELETE FROM '.db_pre.'category WHERE cg_id = '.$id.' ;';
         $del = $this->db->query($delSql);
@@ -342,6 +342,10 @@ class content{
         $article['type'] = $res['cg_type']?$res['cg_type']:'article';
         $status = $this->getArticleStatus();
         $article['status'] = $status[$article['a_status']];
+
+        $sql = 'SELECT i_url FROM '.db_pre.'image WHERE i_article = "'.$article['a_id'].'" AND i_show_as_cover = 1';
+        $cover = $this->db->getone($sql);
+        $article['cover'] = $cover['i_url'];
         return $article;
     }
 
@@ -376,7 +380,7 @@ class content{
             $this->db->query($delSql);
             return $res = array('code'=>1,'msg'=>'文章已被彻底删除');
         }elseif (!$res['a_status']) {
-            header('Location: /admin/?act=contentList');
+            header('Location: '.path_pre.'/admin/?act=contentList');
         }else{
             $updateArr = array('a_status'=>'trash');
             $this->db->update(db_pre.'article',$updateArr,'a_id='.$id);
@@ -388,6 +392,20 @@ class content{
         $sql = 'SELECT * FROM '.db_pre.'article WHERE a_category = '.$cg_id.' AND a_status = "published" ORDER BY a_updateTime DESC  LIMIT 0,1';
         $res = $this->db->getone($sql);
         $res['a_content'] = htmlspecialchars_decode($res['a_content']);
+        return $res;
+    }
+    public function updateIndexConfig($c){
+        $delSql = 'DELETE FROM '.db_pre.'index_config;';
+        $del = $this->db->query($delSql);
+        foreach ($c['id'] as $k => $v) {
+            $content = array('ic_category'=>$c['id'][$k], 'ic_model'=>$c['style'][$k], 'ic_width'=>$c['width'][$k], 'ic_height'=>$c['height'][$k]);
+            $this->db->insert(db_pre.'index_config',$content);
+        }
+        return $res = array('code'=>1,'msg'=>'首页自定义成功！');
+    }   
+    public function getIndexConfig(){
+        $sql = 'SELECT * FROM '.db_pre.'index_config;';
+        $res = $this->db->getall($sql);
         return $res;
     }
 }

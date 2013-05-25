@@ -1,15 +1,15 @@
-﻿<?php
+<?php
   if($c = $basic->get("c","num")){
     $page = $basic->get("page",'num')?$basic->get("page",'num'):1;
     $categoryInfo = $content->getCategoryInfo($c);
     if($categoryInfo['cg_type'] != 'article'){
-      header('Location: /');
+      header('Location: '.path_pre.'/');
     }
     switch ($categoryInfo['cg_show']) {
       case '0':
         $children = $content->getCategory('public',$c,0,'page');
         if($children[0]['cg_id']){
-          header('Location: /?act=page&c='.$children[0]['cg_id']);
+          header('Location: '.path_pre.'/?act=page&c='.$children[0]['cg_id']);
         }else{
           $articles = $content->getArticles($page,'article',$c,'published');
           $count = $content->getArticlesCount($page,'article',$c,'published');
@@ -34,15 +34,17 @@
   }elseif ($id = $basic->get("id","num")) {
     $article = $content->getArticle($id);
     if(!$article){
-      header('Location: /');
+      header('Location: '.path_pre.'/');
     }
     $categoryInfo = $content->getCategoryInfo($article['a_category']);
     if($categoryInfo['cg_type'] != 'article'){
-      header('Location: /');
-    }    
+      header('Location: '.path_pre.'/');
+    } 
+    $res = $content->getAuthorName($article);
     $smarty->assign('categoryInfo',$categoryInfo);
-    $smarty->assign('article',$content->getAuthorName($article));
+    $web_action = $res['a_title'];
+    $smarty->assign('article',$res);
   }else{
-    header('Location: /');
+    header('Location: '.path_pre.'/');
   }
 ?>

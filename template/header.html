@@ -1,18 +1,26 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>{$web_action}-{$web_name}</title>
-  <link rel="stylesheet" href="/template/stylesheets/normalise.css">
-  <link rel="stylesheet" href="/template/stylesheets/jquery-ui.css">
-  <link rel="stylesheet" href="/template/stylesheets/base.css">
-  <link rel="stylesheet" href="/template/stylesheets/page.css">
-  <script src="/template/javascripts/modernizr-2.0.6.min.js"></script>
+  <meta charset="utf-8">
+  <title>{$web_action}-{$web_name}</title>
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/normalise.css" />
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/jquery-ui.css" />
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/base.css" />
+  <link rel="stylesheet" href="{$ROOT_PATH}/template/stylesheets/page.css" />
+  <script type="text/javascript" src="{$ROOT_PATH}/template/javascripts/modernizr-2.0.6.min.js"></script>
+  <script type="text/javascript" src="{$ROOT_PATH}/template/javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="{$ROOT_PATH}/template/javascripts/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="{$ROOT_PATH}/template/javascripts/jquery.imgpreload.min.js"></script>
+  <script type="text/javascript" src="{$ROOT_PATH}/template/javascripts/jquery-ui.toggleSwitch.js"></script>
+  <script type="text/javascript" src="{$ROOT_PATH}/template/javascripts/modules.js"></script>
+  <script type="text/javascript" src="{$ROOT_PATH}/template/javascripts/common.js"></script>
 </head>
 <body>
 <div class="header">
-  <a class="cqupt" href='http://www.cqupt.edu.cn' target='_blank'><img src="/images/cqupt.png" /></a>
-  {include file='shared/nav.tpl'}
-  <div class="c"></div>
-  <a class="logo" href='/'>微电子学</a>
+	<div class="hello-bar">
+  		<a class="cqupt" href='http://www.cqupt.edu.cn' target='_blank'><img src="{$ROOT_PATH}/images/cqupt.png" /></a>
+  {include file='shared/second-nav.tpl'}
+    </div>
+  <a class="logo" href='{$ROOT_PATH}'>{$web_name}</a>
+  {include file='shared/main-nav.tpl'}
 </div>

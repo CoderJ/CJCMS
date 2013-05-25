@@ -47,6 +47,7 @@ $smarty->cache_lifetime  = $cache_time;  //指定缓存生存时间,单位为秒
 $smarty->left_delimiter = '{';
 $smarty->right_delimiter = '}';
 $smarty->assign("web_name",$web_name);
+$smarty->assign("ROOT_PATH",$www_path);
 $smarty->assign("template",'/template/'.$template);
 
 if($user->checkuser()){

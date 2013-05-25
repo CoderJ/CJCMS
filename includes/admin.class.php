@@ -53,7 +53,7 @@ class admin{
             $userRights = $this->db->getone($sql);
             $userRights = $userRights['num'];
             if($userRights<1){
-                header("Location: /admin/?act=index");
+                header("Location: ".path_pre."/admin/?act=index");
             }
         }        
     }
@@ -166,7 +166,7 @@ class admin{
         $userInfo = $this->db->getone($userInfoSql);
         $userGroup = $userInfo['user_group'];
         if(!$userGroup){
-            header('Location: /admin/?act=userList');
+            header('Location: '.path_pre.'/admin/?act=userList');
         }
 
         if($userGroup > $_SESSION['user']['user_group']){
@@ -232,7 +232,7 @@ class admin{
                 $delModule = $this->db->query($delModuleSql);
                 return $res = array('code'=>1,'msg'=>'删除模块成功');
             }else{
-                header('Location: /admin/?act=moduleMag');
+                header('Location: '.path_pre.'/admin/?act=moduleMag');
             }
             return $res = array('code'=>1,'msg'=>'删除模块成功');
 

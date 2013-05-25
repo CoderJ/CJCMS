@@ -25,19 +25,21 @@ b.icon-right{border-color:transparent transparent transparent #B2B2B2 ; border-s
 
 fieldset{ border:2px solid #FFF; background: #FFF; line-height: 300%; padding:0px 20px 10px; margin-bottom: 20px; z-index: 10;}
 fieldset legend{color: #51818F; font-size: 16px; }
-form fieldset label{width: 100px; text-align: right; display: inline-block; font-size: 14px; padding: 0px 20px; color: #333;}
-form fieldset .ui-toggle-switch label {padding:0; line-height: 45px;}
-form fieldset input[type='text'],form fieldset input[type='password']{ border: 1px solid #C9C9C9; border-width: 0px 0px 1px; font-size: 14px; width: 200px; height: 24px; line-height: 24px; background: none; color: #333;}
-form fieldset input[type='text'].title{width:400px;}
-form fieldset textarea.article{width:100%; height: 500px; font-size: 14px;}
-form fieldset input[type='text'].input-red{ border-color:#F00; color:#F00;}
+fieldset label{width: 100px; text-align: right; display: inline-block; font-size: 14px; padding: 0px 20px; color: #333;}
+fieldset .ui-toggle-switch label {padding:0; line-height: 45px;}
+fieldset input[type='text'],fieldset input[type='password']{ border: 1px solid #C9C9C9; border-width: 0px 0px 1px; font-size: 14px; width: 200px; height: 24px; line-height: 24px; background: none; color: #333;}
+fieldset .select input[type='text']{width: 100%;}
+fieldset input[type='text'].title{width:400px;}
+fieldset textarea.article{width:100%; height: 500px; font-size: 14px;}
+fieldset input[type='text'].input-red{ border-color:#F00; color:#F00;}
 .select { display: inline-block; width: 200px; height: 29px; position: relative;}
 .select b.icon-downlist{position: absolute; bottom: 0px; right: 0px; border-color:transparent #B2B2B2 #B2B2B2 transparent; border-style: dashed solid solid dashed; border-width: 5px; height: 0; overflow: hidden; position: absolute; width: 0;}
+select{width:200px;}
 .select input.selected{cursor: default;}
-.select ul{display: none; position: absolute; top: 22px;background: #FFF; width: 198px; padding: 0px; border: 1px solid #C9C9C9; border-width: 0px 1px 1px; z-index: 999;}
+.select ul{display: none; position: absolute; top: 22px;background: #FFF; width: 198px; padding: 0px; border: 1px solid #C9C9C9; border-width: 0px 1px 1px; z-index: 999; max-height: 300px; overflow: auto;}
 .select ul li{ list-style: none; text-indent: 2px; cursor: default; height: 25px; line-height: 25px; z-index: 999;}
 .select ul li:hover,.select ul li.focus{background: #7fd0ed;}
-form fieldset input[type="checkbox"]{position: relative; top: 3px; height: 15px; width: 15px; z-index: 10;}
+fieldset input[type="checkbox"]{position: relative; top: 3px; height: 15px; width: 15px; z-index: 10;}
 
 fieldset ul { padding-left: 0px; }
 fieldset ul li label{ font-size: 16px;}
@@ -99,7 +101,7 @@ fieldset .filterItem.long{ float: left; width: 440px;}
 .imageItem .img{ height: 150px; width: 200px; overflow: hidden; margin-bottom: 25px;}
 .imageItem img{ height: 150px;}
 
-.closeBtn{ width: 20px; height: 20px; overflow: hidden; cursor: pointer;}
+.closeBtn{ width: 20px; height: 20px; overflow: hidden; cursor: pointer; position: absolute;}
 .closeBtn:hover{background: #454545;}
 .closeBtn b.closeBtnTop{ border-color: #7fd0ed transparent transparent transparent; border-style:solid dashed dashed dashed; border-width: 8px; height: 0; overflow: hidden; position: absolute; width: 0;left: 2px;top: 0px;}
 .closeBtn b.closeBtnRight{ border-color:transparent #7fd0ed transparent transparent; border-style:dashed solid dashed dashed; border-width: 8px; height: 0; overflow: hidden; position: absolute; width: 0;right: 0px;top: 2px;}
@@ -113,9 +115,24 @@ fieldset .filterItem.long{ float: left; width: 440px;}
 .fileItem .closeBtn{ display: none; position: absolute; top: 0px; right:0px; width: 20px; height: 20px;}
 .fileItem{ background:#E4ECEF;}
 .fileItem:hover .closeBtn{ display: block;}
+.configBtn{width: 30px; height: 20px; color: #7fd0ed; background: #454545; margin: 0;padding: 0px; line-height: 20px; text-align: center;}
+.configBtn:hover{background: #7fd0ed; color: #454545;}
 tr:hover td.pagenav{ background: none;}
 .pagenav{ text-align: right;}
 .pagenav span.count{ float: left;}
 .pagenav a{display: inline-block; padding: 0px 10px; height: 30px; line-height: 30px; background: #e4ecef; color:#333; cursor: pointer;}
 .pagenav a:hover,.pagenav a.on{ background: #7fd0ed;}
 .pagenav a:hover{ color: #FFF;}
+
+.index-config .item{border:1px solid #CDCDCD; padding: 5px 10px; cursor: pointer; }
+.index-config .item:hover{background:#CDCDCD;}
+.index-config .previous{width: 501px; border:1px solid #CCC; min-height: 200px;}
+.index-config .previous-item{ width: 157px; border-top: 2px solid #ABCDEF; height:150px; background: #FFF; margin: 5px; float:left; position: relative;}
+.index-config .previous-item.double-width{width: 324px;}
+.index-config .previous-item.three-width{width: 491px;}
+.index-config .previous-item.half-height{height: 75px;}
+.index-config .previous-item .title{background:#ABCDEF; font-size: 7px; height: 20px; line-height: 20px; float: left; padding: 0px 5px; margin: 0px 20px; overflow: hidden;}
+.index-config .previous-item .item-config{  position: absolute;  top: 0;  right: 0;  left: 0;  bottom: 0;  background: RGBA(15,36,130,0.1);  cursor: pointer;}
+.index-config .previous-item .item-config .closeBtn{ right: 0px; top: 0px;}
+.index-config .previous-item .item-config .configBtn{ position: absolute; right: 0px; bottom: 0px;}
+.pageColorSel option span{  width: 25px;  height: 25px;  background: #000;}

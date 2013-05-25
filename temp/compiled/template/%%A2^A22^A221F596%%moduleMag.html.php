@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-03 14:24:38
+<?php /* Smarty version 2.6.25, created on 2013-05-25 15:15:10
          compiled from admin/moduleMag.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -36,7 +36,7 @@ unset($_smarty_tpl_vars);
 " checkVal="notnull" /></td><td><input name="name[]" type="text" value="<?php echo $this->_tpl_vars['v']['md_name']; ?>
 " checkVal="notnull" /></td><td class="order"><input name="order[]" type="text" value="<?php echo $this->_tpl_vars['v']['md_order']; ?>
 " class="order" checkVal="number" /></td>        
-      <td><div class="r"><div class="do-list"><a class="deleteModule" href="/admin/?act=moduleMag&do=<?php echo $this->_tpl_vars['v']['md_id']; ?>
+      <td><div class="r"><div class="do-list"><a class="deleteModule" href="?act=moduleMag&do=<?php echo $this->_tpl_vars['v']['md_id']; ?>
 " onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td>
     </tr>
       <?php if ($this->_tpl_vars['v']['children']): ?>
@@ -49,7 +49,7 @@ unset($_smarty_tpl_vars);
 " checkVal="notnull" /></td><td><input name="name[]" type="text" value="<?php echo $this->_tpl_vars['cv']['md_name']; ?>
 " checkVal="notnull" /></td><td class="order"><input name="order[]" type="text" value="<?php echo $this->_tpl_vars['cv']['md_order']; ?>
 " checkVal="number" /></td>        
-      <td><div class="r"><div class="do-list"><a class="deleteModule"  href="/admin/?act=moduleMag&do=<?php echo $this->_tpl_vars['cv']['md_id']; ?>
+      <td><div class="r"><div class="do-list"><a class="deleteModule"  href="?act=moduleMag&do=<?php echo $this->_tpl_vars['cv']['md_id']; ?>
 " onclick="return false;"><b class="icon-del"></b>删除</a></div></div></td><td></td>
         </tr>
         <?php endforeach; endif; unset($_from); ?>

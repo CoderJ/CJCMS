@@ -5,4 +5,4 @@ a { text-decoration:none;}
 a:hover{ text-decoration:none;}
 li{ list-style: none;}
 .clearfix:after,.c { visibility: hidden;  display: block;  font-size: 0;  content: " ";  clear: both; height: 0;}
-.fl{ float: left; width: 100%; display: block; height: 100%;}
+.fl{ float: left; width: 100%; display: block;}

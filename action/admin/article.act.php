@@ -19,7 +19,7 @@
       $web_action = '编辑文章';
       $article = $content->getArticle($id);
       if(!$article){
-        header('Location: /admin/');
+        header('Location: '.path_pre.'/admin/');
       }
       $smarty->assign('article',$article);
     }

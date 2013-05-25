@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-04 20:27:10
+<?php /* Smarty version 2.6.25, created on 2013-05-21 22:49:33
          compiled from admin/category.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -50,9 +50,22 @@ unset($_smarty_tpl_vars);
       <br />
       <label for="addCategoryShow">显示方式: </label>
       <select id="addCategoryShow" name="show">
-        <option value="1" <?php if ($this->_tpl_vars['categoryInfo']['cg_show'] == 1): ?>selected="selected"<?php endif; ?>>只显示本类别内容</option>
+        <option value="1" <?php if ($this->_tpl_vars['categoryInfo']['cg_show'] != 0 && $this->_tpl_vars['categoryInfo']['cg_show'] != 2): ?>selected="selected"<?php endif; ?>>只显示本类别内容</option>
         <option value="0" <?php if ($this->_tpl_vars['categoryInfo']['cg_show'] == 0): ?>selected="selected"<?php endif; ?>>直接跳转到子类别</option>
         <option value="2" <?php if ($this->_tpl_vars['categoryInfo']['cg_show'] == 2): ?>selected="selected"<?php endif; ?>>显示本类别及其子类的内容</option>
+      </select>
+      <br />   
+      <label for="addCategoryShowInNav">在导航中显示: </label>
+      <select id="addCategoryShowInNav" name="show_in_nav" class="switch">
+        <option value="0" <?php if ($this->_tpl_vars['categoryInfo']['cg_public'] == 0): ?>selected="selected"<?php endif; ?>>否</option>
+        <option value="1" <?php if ($this->_tpl_vars['categoryInfo']['cg_public'] == 1 || $this->_tpl_vars['categoryInfo']['cg_public'] != 0): ?>selected="selected"<?php endif; ?>>是</option>
+      </select>
+      <br />
+      <label for="addCategoryNav">导航位置: </label>
+      <select id="addCategoryNav" name="nav">
+        <option value="0" <?php if ($this->_tpl_vars['categoryInfo']['cg_nav'] == 0): ?>selected="selected"<?php endif; ?>>主导航</option>
+        <option value="1" <?php if ($this->_tpl_vars['categoryInfo']['cg_nav'] == 1): ?>selected="selected"<?php endif; ?>>次导航</option>
+        <option value="2" <?php if ($this->_tpl_vars['categoryInfo']['cg_nav'] == 2): ?>selected="selected"<?php endif; ?>>底部导航</option>
       </select>
       <br />
     </fieldset>

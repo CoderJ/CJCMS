@@ -10,7 +10,7 @@ require_once ("../includes/include.php");
 $act = $basic->get("act","word");
 //check user is login?
 if($act != 'login' && !$_SESSION['user']){
-    header("Location: /admin/?act=login");
+    header("Location: ".path_pre."/admin/?act=login");
 }
 
 //check rights

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2013-05-03 13:48:28
+<?php /* Smarty version 2.6.25, created on 2013-05-23 20:48:57
          compiled from admin/article.html */ ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => 'admin/header.html', 'smarty_include_vars' => array()));
@@ -135,7 +135,7 @@ $(function(){
   var editor;
   KindEditor.ready(function(K) {
     editor = K.create(\'#addArticleContent\', {
-      uploadJson : \'/ajax/upload.php\',
+      uploadJson : \'../ajax/upload.php\',
       fileManagerJson : \'/ajax/file_manager.php\',
       width:\'100%\',
       height:\'500px\',

@@ -47,8 +47,8 @@ $(function(){
   var editor;
   KindEditor.ready(function(K) {
     editor = K.create('#addArticleContent', {
-      uploadJson : '/ajax/upload.php',
-      fileManagerJson : '/ajax/file_manager.php',
+      uploadJson : '../ajax/upload.php',
+      fileManagerJson : '../ajax/file_manager.php',
       width:'100%',
       height:'500px',
       afterBlur:function(){this.sync()},

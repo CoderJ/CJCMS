@@ -1,10 +1,8 @@
 {include file='header.html'}
-<div class="container">
+<div class="container article-container">
   <div class="fl clearfix">
-    <div class="left-side">
-      {include file='shared/side-nav.tpl'}
-    </div>
-    <div class="article has-left-side has-right-side">
+    <div class="article has-right-side">
+        <div class="article-category"><a href="?act={$categoryInfo.cg_type}&c={$categoryInfo.cg_id}">{$categoryInfo.cg_name}</a></div>
       {if $articles}
         {include file='shared/article-list.tpl'}
       {/if}
@@ -13,6 +11,7 @@
       {/if}
     </div>
     <div class="right-side clearfix">
+        {include file='shared/right-side.tpl'}
     </div>
     <div class="c"></div>
   </div>

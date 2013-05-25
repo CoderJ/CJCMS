@@ -29,7 +29,8 @@ $(function(){
       });
       return ;
     }
-    _this.after('<div class="select" checkVal="'+_this.attr('checkVal')+'"><input id="'+id+'" type="hidden" name="'+name+'" /><input class="selected" type="text" readOnly="true" /><b class="icon-downlist"></b><ul></ul></div>');
+    var checkVal = _this.attr('checkVal')?('checkVal="'+_this.attr('checkVal')+'"'):'';
+    _this.after('<div class="select '+_this.attr('class')+'" style="'+_this.attr('style')+'"'+checkVal+'"><input id="'+id+'" type="hidden" name="'+name+'" /><input class="selected" type="text" readOnly="true" /><b class="icon-downlist"></b><ul style="width:'+(_this.width()<200?200:_this.width())+'px;"></ul></div>');
     _this.find('option').each(function(){
       _this.next('.select').find('ul').append('<li val="'+$(this).attr('value')+'">'+$(this).html()+'</li>');
       if($(this).attr('selected')){
